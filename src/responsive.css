@@ -1,0 +1,39 @@
+@media (max-width: 800px) {
+  .header-mobile {
+    background-color: #020c1b;
+  }
+  .mobile {
+    display: flex;
+  }
+  .content-wrapper {
+    position: relative;
+  }
+  .desktop {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #020c1b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    animation: mobileMenu 0.3s ease forwards;
+  }
+  a.menu-item:nth-child(3) {
+    display: none;
+  }
+  .hide {
+    display: none;
+    
+  }
+}
+@keyframes mobileMenu {
+  from {
+    /* pushes the sun down past the viewport */
+    top: 0;
+  }
+  to {
+    /* returns the sun to its default position */
+    top: 60px;
+  }
+}
