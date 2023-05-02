@@ -1,8 +1,7 @@
 import { useState, KeyboardEvent } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import Logo from "../../assets/logo.svg";
-import "./style.css";
+import Logo from "../assets/logo.svg";
 
 export const Header = () => {
   const [burgerMenuHide, setBurgerMenuHide] = useState(false);
@@ -15,9 +14,9 @@ export const Header = () => {
     setBurgerMenuHide(false);
   };
 
-  const searchInputHandler = (e: React.KeyboardEvent<HTMLElement>) => {
+  const searchInputHandler = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
-      console.log("go search =>", (e.target as HTMLInputElement).value);
+      // console.log("go search =>", (e.target as HTMLInputElement).value);
     }
   };
 

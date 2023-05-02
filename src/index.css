@@ -14,6 +14,7 @@ code {
 /* HEADER */
 header {
   position: fixed;
+  top: 0px;
   width: 100%;
   height: 60px;
   background: rgba(0, 0, 0, 0.25);
@@ -92,4 +93,8 @@ header {
   max-height: 700px;
   object-fit: cover;
   object-position: center;
+}
+/* --- TV --- */
+.page-container {
+  min-height: 700px;
 }
