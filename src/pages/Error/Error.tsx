@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './styles.module.css'
 
-export const Error = () => {
+export const Error:FC = () => {
   return (
     <div className={styles.page_container}>
       <h1>Error Page</h1>

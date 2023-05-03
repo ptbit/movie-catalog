@@ -3,9 +3,9 @@ import { GenreType } from "../types/genre";
 import { MovieType } from "../types/movie";
 import { API_KEY, API_URL } from "../utils/constants";
 
-const getDiscoverMovie = async (): Promise<MovieType[]> => {
-  const reqUrl = API_URL + "discover/movie?" + API_KEY;
-
+const getDiscoverMovie = async (page: number): Promise<MovieType[]> => {
+  const reqUrl = API_URL + "discover/movie?" + API_KEY + "&page=" + page;
+  // console.log(reqUrl);
   const data = await axios.get(reqUrl);
   const resp = data.data.results;
   return resp.map((res: MovieType) => {

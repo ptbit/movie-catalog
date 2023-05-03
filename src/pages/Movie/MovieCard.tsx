@@ -18,7 +18,6 @@ export const MovieCard = ({
   genre_ids,
   genres,
 }: MovieCardProps) => {
-  // console.log(genres);
   const getGenreName = (genreId: number): string | undefined => {
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
     return genreName;
@@ -32,8 +31,6 @@ export const MovieCard = ({
           <img className={styles.poster} src={poster_path}></img>
         </span>
 
-        {/* <div className={styles.poster_wrapper}></div>
-        <div className={styles.poster_wrapper}></div> */}
         <div className={styles.circleRating}>
           <span className={styles.rating_text}>{vote_average}</span>
         </div>
