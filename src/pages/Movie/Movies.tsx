@@ -1,29 +1,23 @@
-import { FC, useState, useEffect, Suspense, lazy } from "react";
+import { FC, useState, useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { IMDB } from "../../services/IMDB";
 import { GenreType } from "../../types/genre";
 import { MovieType } from "../../types/movie";
 import LazyLoadMovies from "./LazyLoadMovies";
 import styles from "./styles.module.css";
-import { useInView } from "react-intersection-observer";
 
 export const Movies: FC = () => {
   // IMDB.getGenres()
-  const { ref, inView } = useInView({
-    threshold: 0.5,
-  });
-
-  useEffect(() => {
-    console.log('need more data')
-  }, [inView]);
-
-  const [isOpenLazy, setIsOpenLazy] = useState<boolean>(false);
-  const [moviesPage, setMoviesPage] = useState(2);
-
   const [movies, setMovies] = useState<MovieType[]>([]);
   const [genres, setGenres] = useState<GenreType[]>([]);
+  const [pageLimit, setPageLimit] = useState(true);
+
+  const [moviesPage, setMoviesPage] = useState(1);
+
   useEffect(() => {
     getMovies();
     getGenres();
+    setMoviesPage((moviesPage) => moviesPage + 1);
   }, []);
 
   const getMovies = async (page = 1) => {
@@ -35,7 +29,15 @@ export const Movies: FC = () => {
     setGenres(apiData);
   };
 
-  const MyLazyMovies = lazy(() => import("./LazyLoadMovies"));
+  const getMoreMovies = () => {
+    if (moviesPage > 10) {
+      setPageLimit(false);
+      return;
+    } else {
+        getMovies(moviesPage);
+        setMoviesPage((moviesPage) => moviesPage + 1);
+    }
+  };
 
   return (
     <div className={styles.movie_page}>
@@ -47,21 +49,15 @@ export const Movies: FC = () => {
             <select name="Sorting" id="">2</select> */}
           </div>
         </div>
-        <LazyLoadMovies movies={movies} genres={genres} />
-        <button
-          onClick={() => {
-            setMoviesPage((moviesPage) => moviesPage + 1);
-            getMovies(moviesPage);
-            setIsOpenLazy(true);
-          }}
-          ref={ref}>
-          Load movies
-        </button>
-        {/* {isOpenLazy && (
-          <Suspense>
-            <MyLazyMovies movies={movies} genres={genres} />
-          </Suspense>
-        )} */}
+        <InfiniteScroll
+          dataLength={movies.length}
+          next={getMoreMovies}
+          hasMore={pageLimit}
+          loader={<div className="need-more-data">LOADING</div>}>
+          <LazyLoadMovies movies={movies} genres={genres} />
+        </InfiniteScroll>
+
+        {!pageLimit ? <div className="need-more-data">It`s all for today</div> : <></>}
       </div>
     </div>
   );
