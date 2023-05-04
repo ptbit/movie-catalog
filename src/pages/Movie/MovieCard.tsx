@@ -18,7 +18,7 @@ export const MovieCard = ({
   genre_ids,
   genres,
 }: MovieCardProps) => {
-  const getGenreName = (genreId: number): string | undefined => {
+  const getGenreNameById = (genreId: number): string | undefined => {
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
     return genreName;
   };
@@ -38,7 +38,7 @@ export const MovieCard = ({
           {genre_ids.map((genreId: number) => {
             return (
               <div className={styles.genre} key={genreId}>
-                {getGenreName(genreId)}
+                {getGenreNameById(genreId)}
               </div>
             );
           })}

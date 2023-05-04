@@ -118,3 +118,14 @@
   font-size: 14px;
   opacity: 0.5;
 }
+.selected_genre {
+  padding: 5px 10px;
+  margin: 0 10px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  user-select: none;
+  cursor: pointer;
+}
+.selected_genre:hover {
+  background-color: #da2f68;
+}
