@@ -7,89 +7,33 @@ import LazyLoadMovies from "./LazyLoadMovies";
 import styles from "./styles.module.css";
 
 export const Movies: FC = () => {
-  const [pageLimit, setPageLimit] = useState(true);
   const [movies, setMovies] = useState<MovieType[]>([]);
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [availableGenres, setAvailableGenres] = useState<GenreType[]>();
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([28,16,99]);
   const [moviesPage, setMoviesPage] = useState(1);
 
   useEffect(() => {
-    getMovies();
     getGenres();
-    setMoviesPage((moviesPage) => moviesPage + 1);
   }, []);
 
   useEffect(() => {
-    if (selectedGenres.length > 0) {
-      getFilteredMovies(selectedGenres);
-    }
-  }, [selectedGenres]);
+    getMovies();
+  }, [selectedGenres, moviesPage]);
 
-  const getMovies = async (page = 1) => {
-    const apiData = await IMDB.getDiscoverMovie(page);
-    setMovies((prev): MovieType[] => [...prev, ...apiData]);
-  };
 
   const getGenres = async () => {
-    const apiData = await IMDB.getGenres();
-    setGenres(apiData);
-    setAvailableGenres(apiData);
+    const apiResponse = await IMDB.getGenres();
+    setGenres(apiResponse);
   };
 
-  const getMoreMovies = () => {
-    if (moviesPage > 10) {
-      setPageLimit(false);
-      return;
-    } else {
-      getMovies(moviesPage);
-      setMoviesPage((moviesPage) => moviesPage + 1);
-    }
-  };
-
-  const getFilteredMovies = async (genreIds: number[]) => {
-    const apiData = await IMDB.getMoviesForGenre(genreIds);
-    setMovies(apiData);
-    setMoviesPage(1);
-  };
-
-  const genreSelect = (e: React.MouseEvent<HTMLOptionElement>) => {
-    const genreId = +e.currentTarget.value;
-    setSelectedGenres((prev) => [...prev, genreId]);
-    if (availableGenres !== undefined) {
-      setAvailableGenres(availableGenres.filter((genre) => genre.id !== genreId));
-    }
+  const getMovies = async () => {
+    const apiResponse = await IMDB.getMoviesForGenre(selectedGenres, moviesPage);
+    setMovies((prev): MovieType[] => [...prev, ...apiResponse]);
   };
 
   const getGenreNameById = (genreId: number): string | undefined => {
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
     return genreName;
-  };
-
-  const removeGenreFromList = (e: number) => {
-    setSelectedGenres(selectedGenres.filter((item) => item !== e));
-    const removingGenre = genres.filter((item) => item.id === e);
-    let newState: GenreType[] = [];
-    if (availableGenres !== undefined) {
-      newState = [...availableGenres, ...removingGenre];
-    }
-
-    function compare(a: { id: number; name: string }, b: { id: number; name: string }) {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    }
-    if (availableGenres !== undefined) {
-      // console.log(newState)
-      newState.sort(compare);
-      // console.log(newState)
-    }
-    setAvailableGenres(newState);
   };
 
   return (
@@ -103,26 +47,30 @@ export const Movies: FC = () => {
                 key={index}
                 className={styles.selected_genre}
                 onClick={() => {
-                  removeGenreFromList(selectedGenre);
+                  setSelectedGenres(selectedGenres.filter((genre) => genre !== selectedGenre));
+                  setMovies([])
+                  setMoviesPage(1)
                 }}>
                 {getGenreNameById(selectedGenre)}
               </span>
             ))}
-            <select name="genre">
-              {availableGenres !== undefined ? (
-                availableGenres.map((genre, index) => (
-                  <option
-                    key={index}
-                    value={genre.id}
-                    onClick={(e) => {
-                      genreSelect(e);
-                    }}>
-                    {genre.name}
-                  </option>
-                ))
-              ) : (
-                <></>
-              )}
+            <select name="genre" className={styles.select_genre}>
+              {genres.map((genre, index) => {
+                if (!selectedGenres.includes(genre.id)) {
+                  return (
+                    <option
+                      key={index}
+                      value={genre.id}
+                      onClick={() => {
+                        setSelectedGenres((prev) => [...prev, genre.id]);
+                        setMovies([])
+                        setMoviesPage(1)
+                      }}>
+                      {genre.name}
+                    </option>
+                  );
+                }
+              })}
             </select>
             {/* <select name="Genre" id="">1</select>
             <select name="Sorting" id="">2</select> */}
@@ -130,13 +78,16 @@ export const Movies: FC = () => {
         </div>
         <InfiniteScroll
           dataLength={movies.length}
-          next={getMoreMovies}
-          hasMore={pageLimit}
+          next={() => {
+            setMoviesPage((moviesPage) => moviesPage + 1);
+            console.log("need more", moviesPage);
+          }}
+          hasMore={true}
           loader={<div className="need-more-data">LOADING</div>}>
           <LazyLoadMovies movies={movies} genres={genres} />
         </InfiniteScroll>
 
-        {!pageLimit ? <div className="need-more-data">It`s all for today</div> : <></>}
+        {/* {!pageLimit ? <div className="need-more-data">It`s all for today</div> : <></>} */}
       </div>
     </div>
   );

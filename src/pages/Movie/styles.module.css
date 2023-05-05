@@ -121,6 +121,7 @@
 .selected_genre {
   padding: 5px 10px;
   margin: 0 10px;
+  font-size: 17px;
   border: 1px solid grey;
   border-radius: 5px;
   user-select: none;
@@ -128,4 +129,8 @@
 }
 .selected_genre:hover {
   background-color: #da2f68;
+}
+.select_genre {
+  padding: 5px 10px;
+  height: 31px;
 }

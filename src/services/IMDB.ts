@@ -5,7 +5,7 @@ import { API_KEY, API_URL } from "../utils/constants";
 
 const getDiscoverMovie = async (page: number): Promise<MovieType[]> => {
   const reqUrl = API_URL + "discover/movie?" + API_KEY + "&page=" + page;
-  // console.log(reqUrl);
+  console.log("getDiscoverMovie", reqUrl);
   const data = await axios.get(reqUrl);
   const resp = data.data.results;
   return resp.map((res: MovieType) => {
@@ -20,14 +20,17 @@ const getDiscoverMovie = async (page: number): Promise<MovieType[]> => {
   });
 };
 const getGenres = async (): Promise<GenreType[]> => {
+  console.log("getGenres");
   const reqUrl = API_URL + "genre/movie/list?" + API_KEY;
   const data = await axios.get(reqUrl);
   const resp = data.data.genres;
   return resp;
 };
 
-const getMoviesForGenre = async (genre: number[]): Promise<MovieType[]> => {
-  const reqUrl = API_URL + "discover/movie?" + API_KEY + "&with_genres=" + genre;
+const getMoviesForGenre = async (genre: number[], page = 1): Promise<MovieType[]> => {
+  const genreUrl = genre.length ? "&with_genres=" + genre : ''
+  const reqUrl = API_URL + "discover/movie?" + API_KEY + genreUrl + "&page=" + page;
+  console.log("getMoviesForGenre", reqUrl);
   const data = await axios.get(reqUrl);
   const resp = data.data.results;
   return resp.map((res: MovieType) => {
@@ -40,11 +43,10 @@ const getMoviesForGenre = async (genre: number[]): Promise<MovieType[]> => {
       genre_ids: res.genre_ids,
     };
   });
-
 };
 
 export const IMDB = {
-  getDiscoverMovie,
+  // getDiscoverMovie,
   getGenres,
   getMoviesForGenre,
 };
