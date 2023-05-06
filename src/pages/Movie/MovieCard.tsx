@@ -1,5 +1,6 @@
 import { GenreType } from "../../types/genre";
 import styles from "./styles.module.css";
+import NoPoster from "../../assets/no-poster.png";
 
 interface MovieCardProps {
   poster_path: string;
@@ -22,13 +23,16 @@ export const MovieCard = ({
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
     return genreName;
   };
-  
 
   return (
     <div className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
         <span className={styles.poster_holder}>
-          <img className={styles.poster} src={poster_path}></img>
+          {poster_path === "https://image.tmdb.org/t/p/w220_and_h330_facenull" ? (
+            <img src={NoPoster} alt="NoPoster"></img>
+          ) : (
+            <img className={styles.poster} src={poster_path} alt={title}></img>
+          )}
         </span>
 
         <div className={styles.circleRating}>

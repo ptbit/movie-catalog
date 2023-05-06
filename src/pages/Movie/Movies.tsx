@@ -9,8 +9,22 @@ import styles from "./styles.module.css";
 export const Movies: FC = () => {
   const [movies, setMovies] = useState<MovieType[]>([]);
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([28,16,99]);
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [moviesPage, setMoviesPage] = useState(1);
+  const [morePages, setMorePages] = useState(true);
+  const [sortBy, setSortBy] = useState("");
+
+  const sortByList = [
+    { name: "Popularity Descending", value: "popularity.desc" },
+    { name: "Popularity Ascending", value: "popularity.asc" },
+    { name: "Rating Descending", value: "vote_average.desc" },
+    { name: "Rating Ascending", value: "vote_average.asc" },
+    { name: "Release Date Descending", value: "release_date.desc" },
+    { name: "Release Date Ascending", value: "release_date.asc" },
+    { name: "Revenue Descending", value: "revenue.desc" },
+    { name: "Revenue Ascending", value: "revenue.asc" },
+    { name: "Title (A-Z)", value: "original_title.asc" },
+  ];
 
   useEffect(() => {
     getGenres();
@@ -18,8 +32,7 @@ export const Movies: FC = () => {
 
   useEffect(() => {
     getMovies();
-  }, [selectedGenres, moviesPage]);
-
+  }, [selectedGenres, moviesPage, sortBy]);
 
   const getGenres = async () => {
     const apiResponse = await IMDB.getGenres();
@@ -27,7 +40,12 @@ export const Movies: FC = () => {
   };
 
   const getMovies = async () => {
-    const apiResponse = await IMDB.getMoviesForGenre(selectedGenres, moviesPage);
+    const apiResponse = await IMDB.getMoviesForGenre(
+      selectedGenres,
+      moviesPage,
+      setMorePages,
+      sortBy
+    );
     setMovies((prev): MovieType[] => [...prev, ...apiResponse]);
   };
 
@@ -40,40 +58,61 @@ export const Movies: FC = () => {
     <div className={styles.movie_page}>
       <div className={styles.movie_page__wrapper}>
         <div className={styles.movie_page__header}>
-          <div className="movie_page__title">Explore Movies</div>
-          <div className="movie_page__filters">
-            {selectedGenres.map((selectedGenre, index) => (
-              <span
-                key={index}
-                className={styles.selected_genre}
-                onClick={() => {
-                  setSelectedGenres(selectedGenres.filter((genre) => genre !== selectedGenre));
-                  setMovies([])
-                  setMoviesPage(1)
-                }}>
-                {getGenreNameById(selectedGenre)}
-              </span>
-            ))}
-            <select name="genre" className={styles.select_genre}>
-              {genres.map((genre, index) => {
-                if (!selectedGenres.includes(genre.id)) {
+          <div className={styles.movie_page__title}>Explore Movies</div>
+          <div className={styles.movie_page__filters}>
+            <div className={styles.selected_genres}>
+              {selectedGenres.map((selectedGenre, index) => (
+                <span
+                  key={index}
+                  className={styles.selected_genre}
+                  onClick={() => {
+                    setSelectedGenres(selectedGenres.filter((genre) => genre !== selectedGenre));
+                    setMovies([]);
+                    setMoviesPage(1);
+                  }}>
+                  {getGenreNameById(selectedGenre)}
+                </span>
+              ))}
+            </div>
+            <div className={styles.select_container}>
+              <select name="genre" className={styles.select_genre}>
+                {genres.map((genre, index) => {
+                  if (!selectedGenres.includes(genre.id)) {
+                    return (
+                      <option
+                        key={index}
+                        value={genre.id}
+                        onClick={() => {
+                          setSelectedGenres((prev) => [...prev, genre.id]);
+                          setMovies([]);
+                          setMoviesPage(1);
+                        }}>
+                        {genre.name}
+                      </option>
+                    );
+                  }
+                })}
+              </select>
+              <select name="sorting" className={styles.select_sort}>
+                {sortByList.map((sort, index) => {
                   return (
                     <option
                       key={index}
-                      value={genre.id}
+                      value={sort.value}
                       onClick={() => {
-                        setSelectedGenres((prev) => [...prev, genre.id]);
-                        setMovies([])
-                        setMoviesPage(1)
+                        setMovies([]);
+                        setMoviesPage(1);
+                        setSortBy(sort.value);
                       }}>
-                      {genre.name}
+                      {sort.name}
                     </option>
                   );
-                }
-              })}
-            </select>
-            {/* <select name="Genre" id="">1</select>
-            <select name="Sorting" id="">2</select> */}
+                })}
+              </select>
+
+              {/* {value: "popularity +", name: "popularity.asc" },
+              { value: "popularity -", name: "popularity.desc" }, */}
+            </div>
           </div>
         </div>
         <InfiniteScroll
@@ -82,12 +121,17 @@ export const Movies: FC = () => {
             setMoviesPage((moviesPage) => moviesPage + 1);
             console.log("need more", moviesPage);
           }}
-          hasMore={true}
-          loader={<div className="need-more-data">LOADING</div>}>
+          hasMore={morePages}
+          // loader={<div className="need-more-data">LOADING</div>}>
+          loader={<></>}>
           <LazyLoadMovies movies={movies} genres={genres} />
         </InfiniteScroll>
 
-        {/* {!pageLimit ? <div className="need-more-data">It`s all for today</div> : <></>} */}
+        {movies.length === 0 ? (
+          <div className={styles.resultNotFound}>Sorry, Results not found!</div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
