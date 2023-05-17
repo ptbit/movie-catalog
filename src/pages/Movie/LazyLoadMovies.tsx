@@ -9,7 +9,6 @@ interface LazyLoadMoviesProps {
 }
 
 function LazyLoadMovies({ movies, genres }: LazyLoadMoviesProps) {
-
   return (
     <>
       <div className={styles.movie_page__content}>

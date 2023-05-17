@@ -101,12 +101,3 @@ header {
 .page-container {
   min-height: 700px;
 }
-.need-more-data{
-  width: 100%;
-  height: 100px;
-  background-color: green;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 35px;
-}

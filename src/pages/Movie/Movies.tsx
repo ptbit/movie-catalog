@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { IMDB } from "../../services/IMDB";
 import { GenreType } from "../../types/genre";
 import { MovieType } from "../../types/movie";
+import { sortByList } from "../../utils/constants";
 import LazyLoadMovies from "./LazyLoadMovies";
 import styles from "./styles.module.css";
 
@@ -14,18 +15,6 @@ export const Movies: FC = () => {
   const [morePages, setMorePages] = useState(true);
   const [sortBy, setSortBy] = useState("");
 
-  const sortByList = [
-    { name: "Popularity Descending", value: "popularity.desc" },
-    { name: "Popularity Ascending", value: "popularity.asc" },
-    { name: "Rating Descending", value: "vote_average.desc" },
-    { name: "Rating Ascending", value: "vote_average.asc" },
-    { name: "Release Date Descending", value: "release_date.desc" },
-    { name: "Release Date Ascending", value: "release_date.asc" },
-    { name: "Revenue Descending", value: "revenue.desc" },
-    { name: "Revenue Ascending", value: "revenue.asc" },
-    { name: "Title (A-Z)", value: "original_title.asc" },
-  ];
-
   useEffect(() => {
     getGenres();
   }, []);
@@ -36,7 +25,11 @@ export const Movies: FC = () => {
 
   const getGenres = async () => {
     const apiResponse = await IMDB.getGenres();
-    setGenres(apiResponse);
+    if (apiResponse === true || apiResponse === false) {
+      console.log("Error genres");
+    } else {
+      setGenres(apiResponse);
+    }
   };
 
   const getMovies = async () => {
@@ -109,9 +102,6 @@ export const Movies: FC = () => {
                   );
                 })}
               </select>
-
-              {/* {value: "popularity +", name: "popularity.asc" },
-              { value: "popularity -", name: "popularity.desc" }, */}
             </div>
           </div>
         </div>
@@ -119,11 +109,9 @@ export const Movies: FC = () => {
           dataLength={movies.length}
           next={() => {
             setMoviesPage((moviesPage) => moviesPage + 1);
-            console.log("need more", moviesPage);
           }}
           hasMore={morePages}
-          // loader={<div className="need-more-data">LOADING</div>}>
-          loader={<></>}>
+          loader={<div className={styles.need_more_data}>LOADING...</div>}>
           <LazyLoadMovies movies={movies} genres={genres} />
         </InfiniteScroll>
 
