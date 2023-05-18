@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { getGenres } from "../../store/genresSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";
@@ -12,6 +12,7 @@ export const Tv: FC = () => {
 
   const genres = useAppSelector((state) => state.genres.genres);
   const movies = useAppSelector((state) => state.movies.movies);
+  
   const selectedGenres = useSelector((state: RootState) => state.selectedGenres.selectedGenres);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export const Tv: FC = () => {
   };
 
   const clearSelectedGenres = () => {
-    dispatch(removeSelectedGenre());
+    dispatch(removeSelectedGenre(1));
     dispatch(clearMoviesList());
   };
 

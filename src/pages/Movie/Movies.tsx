@@ -1,46 +1,43 @@
-import { FC, useState, useEffect } from "react";
+import styles from "./styles.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { IMDB } from "../../services/IMDB";
+import LazyLoadMovies from "./LazyLoadMovies";
+
+import { FC, useState, useEffect } from "react";
+import { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { getGenres } from "../../store/genresSlice";
+import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";
+import { addSelectedGenre, removeSelectedGenre } from "../../store/selectedGenresSlice";
+import { sortByList } from "../../utils/constants";
+
 import { GenreType } from "../../types/genre";
 import { MovieType } from "../../types/movie";
-import { sortByList } from "../../utils/constants";
-import LazyLoadMovies from "./LazyLoadMovies";
-import styles from "./styles.module.css";
 
 export const Movies: FC = () => {
-  const [movies, setMovies] = useState<MovieType[]>([]);
-  const [genres, setGenres] = useState<GenreType[]>([]);
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
+  const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
+  const genres = useAppSelector((state) => state.genres.genres);
+  const selectedGenres = useSelector((state: RootState) => state.selectedGenres.selectedGenres);
+  const movies = useAppSelector((state) => state.movies.movies);
+  const morePages = useAppSelector((state) => state.movies.morePages);
+
   const [moviesPage, setMoviesPage] = useState(1);
-  const [morePages, setMorePages] = useState(true);
   const [sortBy, setSortBy] = useState("");
 
   useEffect(() => {
-    getGenres();
-  }, []);
+    appDispatch(getGenres());
+  }, [appDispatch]);
 
   useEffect(() => {
-    getMovies();
-  }, [selectedGenres, moviesPage, sortBy]);
-
-  const getGenres = async () => {
-    const apiResponse = await IMDB.getGenres();
-    if (apiResponse === true || apiResponse === false) {
-      console.log("Error genres");
-    } else {
-      setGenres(apiResponse);
-    }
-  };
-
-  const getMovies = async () => {
-    const apiResponse = await IMDB.getMoviesForGenre(
-      selectedGenres,
-      moviesPage,
-      setMorePages,
-      sortBy
+    appDispatch(
+      getMoviesForRedux({
+        genres: [...selectedGenres],
+        pagesId: moviesPage,
+        sortBy: sortBy,
+      })
     );
-    setMovies((prev): MovieType[] => [...prev, ...apiResponse]);
-  };
+  }, [selectedGenres, moviesPage, sortBy]);
 
   const getGenreNameById = (genreId: number): string | undefined => {
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
@@ -59,8 +56,8 @@ export const Movies: FC = () => {
                   key={index}
                   className={styles.selected_genre}
                   onClick={() => {
-                    setSelectedGenres(selectedGenres.filter((genre) => genre !== selectedGenre));
-                    setMovies([]);
+                    dispatch(removeSelectedGenre(selectedGenre));
+                    dispatch(clearMoviesList());
                     setMoviesPage(1);
                   }}>
                   {getGenreNameById(selectedGenre)}
@@ -76,8 +73,8 @@ export const Movies: FC = () => {
                         key={index}
                         value={genre.id}
                         onClick={() => {
-                          setSelectedGenres((prev) => [...prev, genre.id]);
-                          setMovies([]);
+                          dispatch(addSelectedGenre(genre.id));
+                          dispatch(clearMoviesList());
                           setMoviesPage(1);
                         }}>
                         {genre.name}
@@ -93,7 +90,7 @@ export const Movies: FC = () => {
                       key={index}
                       value={sort.value}
                       onClick={() => {
-                        setMovies([]);
+                        dispatch(clearMoviesList());
                         setMoviesPage(1);
                         setSortBy(sort.value);
                       }}>
@@ -111,14 +108,14 @@ export const Movies: FC = () => {
             setMoviesPage((moviesPage) => moviesPage + 1);
           }}
           hasMore={morePages}
-          loader={<div className={styles.need_more_data}>LOADING...</div>}>
+          loader={<div className={styles.need_more_data}>Loading ...</div>}>
           <LazyLoadMovies movies={movies} genres={genres} />
         </InfiniteScroll>
 
         {movies.length === 0 ? (
           <div className={styles.resultNotFound}>Sorry, Results not found!</div>
         ) : (
-          <></>
+          ""
         )}
       </div>
     </div>

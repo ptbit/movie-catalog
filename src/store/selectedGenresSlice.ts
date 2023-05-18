@@ -9,11 +9,12 @@ const selectedGenreSlice = createSlice({
     addSelectedGenre(state, action) {
       state.selectedGenres.push(action.payload);
     },
-    removeSelectedGenre(state) {
-      state.selectedGenres = [];
+    removeSelectedGenre(state, action) {
+      state.selectedGenres = state.selectedGenres.filter((genre) => genre !== action.payload);
     },
   },
 });
 
-export const { addSelectedGenre, removeSelectedGenre } = selectedGenreSlice.actions;
+export const { addSelectedGenre, removeSelectedGenre } =
+  selectedGenreSlice.actions;
 export default selectedGenreSlice.reducer;
