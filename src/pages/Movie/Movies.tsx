@@ -3,22 +3,16 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import LazyLoadMovies from "./LazyLoadMovies";
 
 import { FC, useState, useEffect } from "react";
-import { RootState } from "../../store";
-import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getGenres } from "../../store/genresSlice";
 import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";
 import { addSelectedGenre, removeSelectedGenre } from "../../store/selectedGenresSlice";
 import { sortByList } from "../../utils/constants";
 
-import { GenreType } from "../../types/genre";
-import { MovieType } from "../../types/movie";
-
 export const Movies: FC = () => {
-  const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const genres = useAppSelector((state) => state.genres.genres);
-  const selectedGenres = useSelector((state: RootState) => state.selectedGenres.selectedGenres);
+  const selectedGenres = useAppSelector((state) => state.selectedGenres.selectedGenres);
   const movies = useAppSelector((state) => state.movies.movies);
   const morePages = useAppSelector((state) => state.movies.morePages);
 
@@ -56,8 +50,8 @@ export const Movies: FC = () => {
                   key={index}
                   className={styles.selected_genre}
                   onClick={() => {
-                    dispatch(removeSelectedGenre(selectedGenre));
-                    dispatch(clearMoviesList());
+                    appDispatch(removeSelectedGenre(selectedGenre));
+                    appDispatch(clearMoviesList());
                     setMoviesPage(1);
                   }}>
                   {getGenreNameById(selectedGenre)}
@@ -73,8 +67,8 @@ export const Movies: FC = () => {
                         key={index}
                         value={genre.id}
                         onClick={() => {
-                          dispatch(addSelectedGenre(genre.id));
-                          dispatch(clearMoviesList());
+                          appDispatch(addSelectedGenre(genre.id));
+                          appDispatch(clearMoviesList());
                           setMoviesPage(1);
                         }}>
                         {genre.name}
@@ -90,7 +84,7 @@ export const Movies: FC = () => {
                       key={index}
                       value={sort.value}
                       onClick={() => {
-                        dispatch(clearMoviesList());
+                        appDispatch(clearMoviesList());
                         setMoviesPage(1);
                         setSortBy(sort.value);
                       }}>

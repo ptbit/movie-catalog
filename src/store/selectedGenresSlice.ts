@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const selectedGenreSlice = createSlice({
   name: "selectedGenres",
@@ -6,10 +6,10 @@ const selectedGenreSlice = createSlice({
     selectedGenres: <number[]>[],
   },
   reducers: {
-    addSelectedGenre(state, action) {
+    addSelectedGenre(state, action: PayloadAction<number>) {
       state.selectedGenres.push(action.payload);
     },
-    removeSelectedGenre(state, action) {
+    removeSelectedGenre(state, action: PayloadAction<number>) {
       state.selectedGenres = state.selectedGenres.filter((genre) => genre !== action.payload);
     },
   },
