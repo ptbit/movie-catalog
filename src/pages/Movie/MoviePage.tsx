@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getMovie } from "../../store/movieSlice";
+import { clearMoviesList } from "../../store/moviesSlice";
 
 export const MoviePage = () => {
   const appDispatch = useAppDispatch();
@@ -15,8 +16,7 @@ export const MoviePage = () => {
   const movieId = params.id === undefined ? 0 : +params.id;
 
   useEffect(() => {
-    // getMovie();
-    // typeof action.payload != "boolean"
+    appDispatch(clearMoviesList());
     appDispatch(getMovie(movieId));
   }, []);
 
