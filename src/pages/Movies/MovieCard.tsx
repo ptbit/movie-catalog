@@ -1,6 +1,7 @@
 import { GenreType } from "../../types/genre";
 import styles from "./styles.module.css";
 import NoPoster from "../../assets/no-poster.png";
+import { Link } from "react-router-dom";
 
 interface MovieCardProps {
   poster_path: string;
@@ -9,6 +10,7 @@ interface MovieCardProps {
   release_date: string;
   genre_ids: number[];
   genres: GenreType[];
+  id: number;
 }
 
 export const MovieCard = ({
@@ -18,6 +20,7 @@ export const MovieCard = ({
   release_date,
   genre_ids,
   genres,
+  id,
 }: MovieCardProps) => {
   const getGenreNameById = (genreId: number): string | undefined => {
     const genreName = genres.find((genre) => genre.id === genreId)?.name;
@@ -25,7 +28,7 @@ export const MovieCard = ({
   };
 
   return (
-    <div className={styles.movie_card}>
+    <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
         <span className={styles.poster_holder}>
           {poster_path === "https://image.tmdb.org/t/p/w220_and_h330_facenull" ? (
@@ -53,6 +56,6 @@ export const MovieCard = ({
         <div className={styles.movie_title}>{title}</div>
         <div className={styles.movie_date}>{release_date}</div>
       </div>
-    </div>
+    </Link>
   );
 };

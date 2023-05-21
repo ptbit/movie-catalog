@@ -101,3 +101,19 @@ header {
 .page-container {
   min-height: 700px;
 }
+
+/* --- FOOTER --- */
+footer {
+  background-color: #04152d;
+  padding: 50px 0;
+  color: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+footer > ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  padding: 80px;
+}

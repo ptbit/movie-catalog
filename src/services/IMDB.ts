@@ -65,8 +65,54 @@ const getMovies = async (
   }
 };
 
+// type GenreType = {
+//   id: number;
+//   name: string;
+// };
+
+const getMovie = async (
+  movieId: number
+): Promise<{
+  poster_path: string;
+  title: string;
+  subtitle: string;
+  vote_average: number;
+  release_date: string;
+  genres: string[];
+  background: string;
+  overview: string;
+  status: string;
+  runtime: number;
+}> => {
+  const reqUrl = API_URL + "movie/" + movieId + "?" + API_KEY;
+  const data = await axios.get(reqUrl);
+
+
+  const genresArr: string[] = [];
+  const movieGenres: GenreType[] = data.data.genres;
+
+  movieGenres.forEach((genre) => {
+    genresArr.push(genre.name);
+  });
+
+  const response = {
+    poster_path: data.data.poster_path,
+    title: data.data.title,
+    subtitle: data.data.tagline,
+    vote_average: data.data.vote_average,
+    release_date: data.data.release_date,
+    genres: genresArr,
+    background: data.data.backdrop_path,
+    overview: data.data.overview,
+    status: data.data.status,
+    runtime: data.data.runtime,
+  };
+  return response;
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
   getMovies,
+  getMovie,
 };
