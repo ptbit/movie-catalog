@@ -14,29 +14,55 @@ type MovieType = {
   runtime: number;
 };
 
+type CastType = {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: null | string;
+  cast_id?: number;
+  character?: string;
+  credit_id: string;
+  order?: number;
+  department?: string;
+  job?: string;
+};
+
 type MovieStateType = {
   movie: MovieType;
+  team: CastType[];
+  director: string;
+  writer: string;
 };
 
 const initialState: MovieStateType = {
-  movie: {
-    poster_path: "",
-    title: "",
-    subtitle: "",
-    vote_average: 0,
-    release_date: "",
-    genres: [],
-    background: "",
-    overview: "",
-    status: "",
-    runtime: 0,
-  },
+  movie: <MovieType>{},
+  team: [],
+  director: "",
+  writer: "",
 };
 
 export const getMovie = createAsyncThunk<MovieType, number>(
   "movie/getMovie",
   async function (movieId) {
     const response = await IMDB.getMovie(movieId);
+    return response;
+  }
+);
+
+type GetTeamResponseType = {
+  team: CastType[];
+  director: string;
+  writer: string;
+};
+export const getTeam = createAsyncThunk<GetTeamResponseType, number>(
+  "movie/getTeam",
+  async function (movieId) {
+    const response = await IMDB.getMovieCredits(movieId);
+    // console.log(response);
     return response;
   }
 );
@@ -49,6 +75,11 @@ const movieSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getMovie.fulfilled, (state, action) => {
       state.movie = action.payload;
+    });
+    builder.addCase(getTeam.fulfilled, (state, action) => {
+      state.team = action.payload.team;
+      state.director = action.payload.director;
+      state.writer = action.payload.writer;
     });
   },
 });

@@ -4,12 +4,14 @@ import castPic from "../../assets/movie_page_banner.jpg";
 import { useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getMovie } from "../../store/movieSlice";
+import { getMovie, getTeam } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
 
 export const MoviePage = () => {
   const appDispatch = useAppDispatch();
   const movie = useAppSelector((state) => state.movie.movie);
+  const director = useAppSelector((state) => state.movie.director);
+  const writer = useAppSelector((state) => state.movie.writer);
 
   const params = useParams();
 
@@ -18,6 +20,7 @@ export const MoviePage = () => {
   useEffect(() => {
     appDispatch(clearMoviesList());
     appDispatch(getMovie(movieId));
+    appDispatch(getTeam(movieId));
   }, []);
 
   const runtimeToStr = (runtime: number): string => {
@@ -37,13 +40,13 @@ export const MoviePage = () => {
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
           <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
-          <div className={styles.movie_details_circle_rating}>{movie.vote_average.toFixed(1)}</div>
+          <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
         <div className={styles.movie_details_content}>
           <h1 className={styles.movie_details_title}>{movie.title}</h1>
           <h3 className={styles.movie_details_subtitle}>{movie.subtitle}</h3>
           <div className={styles.movie_details_genres}>
-            {movie.genres.map((genre, index) => {
+            {movie.genres?.map((genre, index) => {
               return (
                 <div key={index} className={styles.movie_details_genre}>
                   {genre}
@@ -77,7 +80,7 @@ export const MoviePage = () => {
             <div className={styles.movie_details_info_item}>
               <span className={styles.movie_details_info_item_title}>Director:</span>
               <span className={styles.movie_details_info_item_content}>
-                Michael Jelenic, Aaron Horvath
+                {director}
               </span>
             </div>
           </div>
@@ -85,7 +88,7 @@ export const MoviePage = () => {
           <div className={styles.movie_details_info}>
             <div className={styles.movie_details_info_item}>
               <span className={styles.movie_details_info_item_title}>Writer:</span>
-              <span className={styles.movie_details_info_item_content}>Jeff Loveness</span>
+              <span className={styles.movie_details_info_item_content}>{writer}</span>
             </div>
           </div>
         </div>
