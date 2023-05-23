@@ -114,9 +114,60 @@
 .movie_details_info_item_content {
   opacity: 0.5;
 }
+/* --------------ACTOR SECTION */
+.movie_details_castSectionShadow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(180deg,rgba(4,21,45,0) 0%,#04152d 79.17%);
+}
 .movie_details_castSection {
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  right: 0;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+.movie_details_castSection > h2 {
+  margin-bottom: 20px;
+}
+.actors_row {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  overflow-x: scroll;
+}
+.actor_item {
+  min-width: 138px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.actor_avatar > img {
+  width: 138px;
+  height: 175px;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 5px;
+}
+.actor_name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.actor_role {
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+
+.movie_details_similarMovie {
+  height: 100px;
+  margin-top: 150px;
 }
