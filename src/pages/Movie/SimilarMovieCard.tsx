@@ -32,7 +32,7 @@ export const SimilarMovieCard = ({
         </span>
 
         <div className={styles.circleRating}>
-          <span className={styles.rating_text}>{vote_average}</span>
+          <span className={styles.rating_text}>{vote_average.toFixed(1)}</span>
         </div>
         <div className={styles.genres}>
           {genre_ids.map((genreId: number) => {

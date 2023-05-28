@@ -1,5 +1,5 @@
+export const API_KEY = process.env.REACT_APP_API_KEY
 export const API_URL = "https://api.themoviedb.org/3/";
-export const API_KEY = 'api_key=814d06212d64c945454dee2f10effcef'
 
 export const sortByList = [
   { name: "Popularity Descending", value: "popularity.desc" },
@@ -12,3 +12,9 @@ export const sortByList = [
   { name: "Revenue Ascending", value: "revenue.asc" },
   { name: "Title (A-Z)", value: "original_title.asc" },
 ];
+
+export const runtimeToStr = (runtime: number): string => {
+  const minutes = runtime % 60;
+  const hours = (runtime - minutes) / 60;
+  return hours + "h " + minutes + "m";
+};

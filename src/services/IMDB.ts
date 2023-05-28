@@ -169,7 +169,6 @@ const getMovieCredits = async (movieId: number): Promise<GetMovieCreditsResponse
       director: "NOT FOUND",
       writer: "NOT FOUND",
     };
-    console.log("director or writer NOT FOUND");
     return response;
   }
 };

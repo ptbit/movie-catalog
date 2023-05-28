@@ -1,11 +1,12 @@
-import { useParams } from "react-router-dom";
-import styles from "./styles.module.css";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getMovie, getSimilar, getTeam } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { ActorItem } from "./ActorItem";
 import { SimilarMovieCard } from "./SimilarMovieCard";
+import { runtimeToStr } from "../../utils/constants";
+import styles from "./styles.module.css";
 
 export const MoviePage = () => {
   const appDispatch = useAppDispatch();
@@ -26,26 +27,20 @@ export const MoviePage = () => {
     appDispatch(getSimilar(movieId));
   }, [params]);
 
-  const runtimeToStr = (runtime: number): string => {
-    const minutes = runtime % 60;
-    const hours = (runtime - minutes) / 60;
-    return hours + "h " + minutes + "m";
-  };
-
-
   return (
     <div className={styles.movie_details_page}>
       <div className={styles.background_logo}>
         <img
-          src={"https://image.tmdb.org/t/p/original" + movie.background}
+          src={"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.background}
           alt={movie.background}
         />
       </div>
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
-          <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
+          <img src={"https://image.tmdb.org/t/p/w300_and_h450_bestv2" + movie.poster_path} alt="" />
           <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
+        {/* COMPONENT MOVIE DETAILS CONTENT START? */}
         <div className={styles.movie_details_content}>
           <h1 className={styles.movie_details_title}>{movie.title}</h1>
           <h3 className={styles.movie_details_subtitle}>{movie.subtitle}</h3>
@@ -62,7 +57,6 @@ export const MoviePage = () => {
             <div className={styles.movie_details_overview_title}>Overview</div>
             <div className={styles.movie_details_overview_description}>{movie.overview}</div>
           </div>
-
           <div className={styles.movie_details_info}>
             <div className={styles.movie_details_info_item}>
               <span className={styles.movie_details_info_item_title}>Status:</span>
@@ -79,14 +73,12 @@ export const MoviePage = () => {
               </span>
             </div>
           </div>
-
           <div className={styles.movie_details_info}>
             <div className={styles.movie_details_info_item}>
               <span className={styles.movie_details_info_item_title}>Director:</span>
               <span className={styles.movie_details_info_item_content}>{director}</span>
             </div>
           </div>
-
           <div className={styles.movie_details_info}>
             <div className={styles.movie_details_info_item}>
               <span className={styles.movie_details_info_item_title}>Writer:</span>
@@ -94,7 +86,9 @@ export const MoviePage = () => {
             </div>
           </div>
         </div>
+        {/* COMPONENT MOVIE DETAILS CONTENT END */}
       </div>
+
       <div className={styles.movie_details_castSectionShadow}></div>
 
       <div className={styles.movie_details_castSection}>
@@ -104,7 +98,7 @@ export const MoviePage = () => {
             return (
               <ActorItem
                 key={index}
-                avatar={"https://www.themoviedb.org/t/p/w138_and_h175_face" + el.profile_path}
+                avatar={"https://image.tmdb.org/t/p/w138_and_h175_face" + el.profile_path}
                 name={el.name}
                 role={el.character ? el.character : ""}
               />
@@ -113,18 +107,23 @@ export const MoviePage = () => {
         </div>
       </div>
 
-      <div className={styles.movie_details_similarMovie}>
-        {similarMovies.map((movie) => (
-          <SimilarMovieCard
-            key={movie.id}
-            poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
-            title={movie.title}
-            vote_average={movie.vote_average}
-            release_date={movie.release_date}
-            genre_ids={movie.genre_ids}
-            id={movie.id}
-          />
-        ))}
+      <div className={styles.movie_details_similarMovie__Section}>
+        <h2 className={styles.movie_details_similarMovie__Title}>Similar Movies (API opinion)</h2>
+        <div className={styles.movie_details_similarMovie}>
+          {similarMovies.map(
+            ({ id, poster_path, title, vote_average, release_date, genre_ids }) => (
+              <SimilarMovieCard
+                key={id}
+                id={id}
+                poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + poster_path}
+                title={title}
+                vote_average={vote_average}
+                release_date={release_date}
+                genre_ids={genre_ids}
+              />
+            )
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,14 +1,12 @@
-import { GenreType } from "../../types/genre";
 import { MovieType } from "../../types/movie";
 import { MovieCard } from "./MovieCard";
 import styles from "./styles.module.css";
 
 interface LazyLoadMoviesProps {
   movies: MovieType[];
-  genres: GenreType[];
 }
 
-function LazyLoadMovies({ movies, genres }: LazyLoadMoviesProps) {
+function LazyLoadMovies({ movies }: LazyLoadMoviesProps) {
   return (
     <div className={styles.movie_page__content}>
       {movies.map((movie) => (
@@ -19,7 +17,6 @@ function LazyLoadMovies({ movies, genres }: LazyLoadMoviesProps) {
           vote_average={movie.vote_average}
           release_date={movie.release_date}
           genre_ids={movie.genre_ids}
-          genres={genres}
           id={movie.id}
         />
       ))}

@@ -33,8 +33,8 @@
   position: relative;
 }
 .movie_details_poster img {
-  width: 100%;
-  height: 100%;
+  width: 350px;
+  height: 535px;
   object-fit: cover;
   object-position: center;
   border-radius: 15px;
@@ -167,11 +167,17 @@
   margin-bottom: 10px;
 }
 /* --------------SIMILAR SECTION */
-.movie_details_similarMovie {
-  max-height: 445px;
+.movie_details_similarMovie__Section{
+  max-height: 500px;
   max-width: 1200px;
   margin: 150px auto 0px;
-  padding: 20px;
+  padding: 0 20px;
+}
+.movie_details_similarMovie__Title{
+  margin-bottom: 20px;
+}
+.movie_details_similarMovie {
+
   display: flex;
   gap: 20px;
   overflow-x: scroll;
@@ -232,6 +238,7 @@
   justify-content: center;
 }
 .rating_text {
+  color: black;
   font-size: 20px;
   font-weight: 700;
 }

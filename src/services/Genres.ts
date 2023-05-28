@@ -26,6 +26,19 @@ const getGenreNameById = (genreId: number): string => {
   return "";
 };
 
+export const allGenres = (): GenreType[] => {
+  const genres = localStorage.getItem("genres");
+  if (genres === null) {
+    getGenres();
+  }
+  if (genres != null) {
+    const genresArr: GenreType[] = JSON.parse(genres);
+    return genresArr;
+  }
+  return [];
+};
+
 export const Genres = {
   getGenreNameById,
+  allGenres,
 };

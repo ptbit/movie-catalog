@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { Genres } from "../../services/Genres";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { addSelectedGenre } from "../../store/selectedGenresSlice";
 import styles from "./styles.module.css";
@@ -10,7 +11,7 @@ type GenresSelectProps = {
 
 export const GenresSelect = ({ setMoviesPage }: GenresSelectProps) => {
   const appDispatch = useAppDispatch();
-  const genres = useAppSelector((state) => state.genres.genres);
+  const genres = Genres.allGenres()
   const selectedGenres = useAppSelector((state) => state.selectedGenres.selectedGenres);
   return (
     <select name="genre" className={styles.select_genre}>
