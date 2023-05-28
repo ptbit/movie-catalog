@@ -36,6 +36,7 @@ type MovieStateType = {
   team: CastType[];
   director: string;
   writer: string;
+  similarMovies: SimilarMovieType[]
 };
 
 const initialState: MovieStateType = {
@@ -43,6 +44,7 @@ const initialState: MovieStateType = {
   team: [],
   director: "",
   writer: "",
+  similarMovies: []
 };
 
 export const getMovie = createAsyncThunk<MovieType, number>(
@@ -58,11 +60,29 @@ type GetTeamResponseType = {
   director: string;
   writer: string;
 };
+
 export const getTeam = createAsyncThunk<GetTeamResponseType, number>(
   "movie/getTeam",
-  async function (movieId) {
+  async function (movieId: number) {
     const response = await IMDB.getMovieCredits(movieId);
     // console.log(response);
+    return response;
+  }
+);
+
+type SimilarMovieType = {
+  id: number;
+  poster_path: string;
+  title: string;
+  vote_average: number;
+  release_date: string;
+  genre_ids: number[];
+};
+
+export const getSimilar = createAsyncThunk<SimilarMovieType[], number>(
+  "movie/getSimilar",
+  async function (movieId: number) {
+    const response = await IMDB.getSimilarMovies(movieId);
     return response;
   }
 );
@@ -80,6 +100,9 @@ const movieSlice = createSlice({
       state.team = action.payload.team;
       state.director = action.payload.director;
       state.writer = action.payload.writer;
+    });
+    builder.addCase(getSimilar.fulfilled, (state, action) => {
+      state.similarMovies = action.payload
     });
   },
 });

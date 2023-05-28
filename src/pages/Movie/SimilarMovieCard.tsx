@@ -1,7 +1,7 @@
-import { GenreType } from "../../types/genre";
-import styles from "./styles.module.css";
-import NoPoster from "../../assets/no-poster.png";
 import { Link } from "react-router-dom";
+import { Genres } from "../../services/Genres";
+import NoPoster from "../../assets/no-poster.png";
+import styles from "./styles.module.css";
 
 interface MovieCardProps {
   poster_path: string;
@@ -9,25 +9,17 @@ interface MovieCardProps {
   vote_average: number;
   release_date: string;
   genre_ids: number[];
-  genres: GenreType[];
   id: number;
 }
 
-export const MovieCard = ({
+export const SimilarMovieCard = ({
   poster_path,
   title,
   vote_average,
   release_date,
   genre_ids,
-  genres,
   id,
 }: MovieCardProps) => {
-  
-  const getGenreNameById = (genreId: number): string | undefined => {
-    const genreName = genres.find((genre) => genre.id === genreId)?.name;
-    return genreName;
-  };
-
   return (
     <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
@@ -46,7 +38,7 @@ export const MovieCard = ({
           {genre_ids.map((genreId: number) => {
             return (
               <div className={styles.genre} key={genreId}>
-                {getGenreNameById(genreId)}
+                {Genres.getGenreNameById(genreId)}
               </div>
             );
           })}

@@ -151,9 +151,11 @@ const getMovieCredits = async (movieId: number): Promise<GetMovieCreditsResponse
   const director = crew.find((element) => element.job === "Director")?.original_name;
   let writer = crew.find((el) => el.job === "Writer")?.original_name;
   if (writer === undefined) {
-     writer = crew.find((el) => el.job === "Screenplay")?.original_name;
-     
-    }
+    writer = crew.find((el) => el.job === "Screenplay")?.original_name;
+  }
+  if (writer === undefined) {
+    writer = crew.find((el) => el.department === "Writing")?.original_name;
+  }
   if (director != undefined && writer != undefined) {
     const response = {
       team,
@@ -171,10 +173,29 @@ const getMovieCredits = async (movieId: number): Promise<GetMovieCreditsResponse
     return response;
   }
 };
+
+const getSimilarMovies = async (movieId: number): Promise<MovieType[]> => {
+  const reqUrl = API_URL + "movie/" + movieId + "/similar?" + API_KEY;
+  const data = await axios.get(reqUrl);
+
+  const resp = data.data.results;
+  return resp.map((res: MovieType) => {
+    return {
+      id: res.id,
+      poster_path: res.poster_path,
+      title: res.title,
+      vote_average: res.vote_average,
+      release_date: res.release_date,
+      genre_ids: res.genre_ids,
+    };
+  });
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
   getMovies,
   getMovie,
   getMovieCredits,
+  getSimilarMovies,
 };

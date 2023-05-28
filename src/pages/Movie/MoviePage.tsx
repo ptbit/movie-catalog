@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
 import styles from "./styles.module.css";
-
 import { useEffect } from "react";
-
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getMovie, getTeam } from "../../store/movieSlice";
+import { getMovie, getSimilar, getTeam } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { ActorItem } from "./ActorItem";
+import { SimilarMovieCard } from "./SimilarMovieCard";
 
 export const MoviePage = () => {
   const appDispatch = useAppDispatch();
@@ -14,6 +13,7 @@ export const MoviePage = () => {
   const director = useAppSelector((state) => state.movie.director);
   const writer = useAppSelector((state) => state.movie.writer);
   const team = useAppSelector((state) => state.movie.team);
+  const similarMovies = useAppSelector((state) => state.movie.similarMovies);
 
   const params = useParams();
 
@@ -23,13 +23,15 @@ export const MoviePage = () => {
     appDispatch(clearMoviesList());
     appDispatch(getMovie(movieId));
     appDispatch(getTeam(movieId));
-  }, []);
+    appDispatch(getSimilar(movieId));
+  }, [params]);
 
   const runtimeToStr = (runtime: number): string => {
     const minutes = runtime % 60;
     const hours = (runtime - minutes) / 60;
     return hours + "h " + minutes + "m";
   };
+
 
   return (
     <div className={styles.movie_details_page}>
@@ -94,6 +96,7 @@ export const MoviePage = () => {
         </div>
       </div>
       <div className={styles.movie_details_castSectionShadow}></div>
+
       <div className={styles.movie_details_castSection}>
         <h2>Top Cast</h2>
         <div className={styles.actors_row}>
@@ -109,8 +112,19 @@ export const MoviePage = () => {
           })}
         </div>
       </div>
+
       <div className={styles.movie_details_similarMovie}>
-        <p>Similar Movies</p>
+        {similarMovies.map((movie) => (
+          <SimilarMovieCard
+            key={movie.id}
+            poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
+            title={movie.title}
+            vote_average={movie.vote_average}
+            release_date={movie.release_date}
+            genre_ids={movie.genre_ids}
+            id={movie.id}
+          />
+        ))}
       </div>
     </div>
   );
