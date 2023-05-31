@@ -1,11 +1,11 @@
 import axios from "axios";
 import { GenreType } from "../types/genre";
 import { MovieType } from "../types/movie";
-import { API_KEY, API_URL } from "../utils/constants";
+import { API_URL, HEADERS as headers } from "../utils/constants";
 
 const getGenres = async (): Promise<GenreType[] | boolean> => {
-  const reqUrl = API_URL + "genre/movie/list?" + API_KEY;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "genre/movie/list";
+  const data = await axios.get(reqUrl, { headers });
   if (data.status != 200) {
     return false;
   }
@@ -20,8 +20,8 @@ const getMoviesForGenre = async (
 ): Promise<MovieType[]> => {
   const sortByUrl = sortBy === "" ? "" : "&sort_by=" + sortBy;
   const genreUrl = genre.length ? "&with_genres=" + genre : "";
-  const reqUrl = API_URL + "discover/movie?" + API_KEY + genreUrl + "&page=" + page + sortByUrl;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "discover/movie?" + genreUrl + "&page=" + page + sortByUrl;
+  const data = await axios.get(reqUrl, { headers });
 
   data.data.total_pages <= 1 ? setMorePages(false) : setMorePages(true);
 
@@ -45,8 +45,8 @@ const getMovies = async (
 ): Promise<MovieType[] | boolean> => {
   const sortByUrl = sortBy === "" ? "" : "&sort_by=" + sortBy;
   const genreUrl = genres.length ? "&with_genres=" + genres : "";
-  const reqUrl = API_URL + "discover/movie?" + API_KEY + genreUrl + "&page=" + page + sortByUrl;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "discover/movie?" + genreUrl + "&page=" + page + sortByUrl;
+  const data = await axios.get(reqUrl, { headers });
 
   const resp = data.data.results;
   if (data.data.total_pages >= page) {
@@ -79,8 +79,8 @@ type GetMovieResponseType = {
 };
 
 const getMovie = async (movieId: number): Promise<GetMovieResponseType> => {
-  const reqUrl = API_URL + "movie/" + movieId + "?" + API_KEY;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "movie/" + movieId;
+  const data = await axios.get(reqUrl, { headers });
 
   const genresArr: string[] = [];
   const movieGenres: GenreType[] = data.data.genres;
@@ -142,12 +142,13 @@ type GetMovieCreditsResponseType = {
 };
 
 const getMovieCredits = async (movieId: number): Promise<GetMovieCreditsResponseType> => {
-  const reqUrl = API_URL + "movie/" + movieId + "/credits?" + API_KEY;
-  const data = await axios.get(reqUrl);
-  const crew: CrewType[] = data.data.crew;
+  const reqUrl = API_URL + "movie/" + movieId + "/credits";
 
+  const data = await axios.get(reqUrl, { headers });
+
+  const crew: CrewType[] = data.data.crew;
   const team: CastType[] = data.data.cast;
-  // console.log(data.data.crew); Louis Leterrier
+
   const director = crew.find((element) => element.job === "Director")?.original_name;
   let writer = crew.find((el) => el.job === "Writer")?.original_name;
   if (writer === undefined) {
@@ -174,8 +175,9 @@ const getMovieCredits = async (movieId: number): Promise<GetMovieCreditsResponse
 };
 
 const getSimilarMovies = async (movieId: number): Promise<MovieType[]> => {
-  const reqUrl = API_URL + "movie/" + movieId + "/similar?" + API_KEY;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "movie/" + movieId + "/similar";
+
+  const data = await axios.get(reqUrl, { headers });
 
   const resp = data.data.results;
   return resp.map((res: MovieType) => {
@@ -190,6 +192,47 @@ const getSimilarMovies = async (movieId: number): Promise<MovieType[]> => {
   });
 };
 
+type ParamsType = {
+  page?: number;
+  sortBy?: string;
+  with_genres?: string;
+  query: string;
+};
+
+const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefined> => {
+  try {
+    const data = await axios.get(API_URL + "search/multi", {
+      headers,
+      params,
+    });
+
+    if (params.page === undefined) {
+      params.page = 1;
+    }
+    const resp = data.data.results;
+    // console.log(data.data);
+    // console.log(data.data.total_pages >= params.page)
+    if (data.data.total_pages >= params.page) {
+      const ans = resp.map((res: MovieType): MovieType => {
+        return {
+          id: res.id,
+          poster_path: res.poster_path,
+          title: res.title,
+          vote_average: res.vote_average,
+          release_date: res.release_date,
+          genre_ids: res.genre_ids,
+        };
+      });
+    
+      return ans.filter((movie:MovieType) => movie.title !== undefined && movie.poster_path !== undefined && movie.poster_path !== null);
+    }
+    // movie.title !== undefined || || movie.poster_path !== undefined
+  } catch (err) {
+    console.log(err);
+    // return err
+  }
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
@@ -197,4 +240,5 @@ export const IMDB = {
   getMovie,
   getMovieCredits,
   getSimilarMovies,
+  getSearchData,
 };

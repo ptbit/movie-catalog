@@ -18,3 +18,8 @@ export const runtimeToStr = (runtime: number): string => {
   const hours = (runtime - minutes) / 60;
   return hours + "h " + minutes + "m";
 };
+
+export const HEADERS = {
+  accept: "application/json",
+  Authorization: "Bearer " + API_KEY,
+};

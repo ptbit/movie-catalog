@@ -1,10 +1,12 @@
 import { useState, KeyboardEvent } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../assets/logo.svg";
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [burgerMenuHide, setBurgerMenuHide] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState("");
 
   const handleBurgerMenu = () => {
     setBurgerMenuHide(!burgerMenuHide);
@@ -14,10 +16,14 @@ export const Header = () => {
     setBurgerMenuHide(false);
   };
 
-  const searchInputHandler = (e: KeyboardEvent<HTMLElement>) => {
+  const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
-      // console.log("go search =>", (e.target as HTMLInputElement).value);
+      navigate("/search/" + searchInputValue);
     }
+  };
+
+  const searchInputChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchInputValue(e.currentTarget.value);
   };
 
   return (
@@ -38,10 +44,16 @@ export const Header = () => {
             className="header-search"
             type="text"
             placeholder="Search ..."
-            onKeyDown={searchInputHandler}
+            onKeyDown={startSearchHandler}
+            onChange={searchInputChangeHandler}
+            value={searchInputValue}
           />
           <div className="menu-item">
-            <AiOutlineSearch />
+            <AiOutlineSearch
+              onClick={() => {
+                navigate("/search/" + searchInputValue);
+              }}
+            />
           </div>
         </div>
 

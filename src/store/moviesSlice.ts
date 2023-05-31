@@ -42,8 +42,16 @@ export const getMoviesForRedux = createAsyncThunk<MovieType[] | boolean, GetMovi
   }
 );
 
+export const getSearchMovies = createAsyncThunk<MovieType[], string>(
+  "movies/getSearchMovies",
+  async function (params) {
+    const response = await IMDB.getSearchData({ query: params });
+    return response ? response : [];
+  }
+);
+
 const moviesSlice = createSlice({
-  name: "movie",
+  name: "movies",
   initialState,
   reducers: {
     clearMoviesList(state) {
@@ -56,9 +64,13 @@ const moviesSlice = createSlice({
       if (typeof action.payload != "boolean") {
         action.payload?.forEach((movie) => state.movies.push(movie));
         if (action.payload.length === 0) {
-          state.morePages = false
+          state.morePages = false;
         }
-      } 
+      }
+    });
+
+    builder.addCase(getSearchMovies.fulfilled, (state, action) => {
+      action.payload?.forEach((movie) => state.movies.push(movie));
     });
   },
 });

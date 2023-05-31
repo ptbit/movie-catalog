@@ -4,7 +4,7 @@ import LazyLoadMovies from "./LazyLoadMovies";
 
 import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getMoviesForRedux } from "../../store/moviesSlice";
+import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";
 import { SortingSelect } from "./SortingSelect";
 import { GenresSelect } from "./GenresSelect";
 import { SelectedGenres } from "./SelectedGenres";
@@ -18,7 +18,9 @@ export const Movies: FC = () => {
   const [moviesPage, setMoviesPage] = useState(1);
   const [sortBy, setSortBy] = useState("");
 
-
+  useEffect(() => {
+    appDispatch(clearMoviesList());
+  }, []);
 
   useEffect(() => {
     appDispatch(
