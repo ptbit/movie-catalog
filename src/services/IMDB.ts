@@ -200,6 +200,7 @@ type ParamsType = {
 };
 
 const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefined> => {
+  console.log("params.page", params.page);
   try {
     const data = await axios.get(API_URL + "search/multi", {
       headers,
@@ -210,8 +211,7 @@ const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefine
       params.page = 1;
     }
     const resp = data.data.results;
-    // console.log(data.data);
-    // console.log(data.data.total_pages >= params.page)
+
     if (data.data.total_pages >= params.page) {
       const ans = resp.map((res: MovieType): MovieType => {
         return {
@@ -223,13 +223,13 @@ const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefine
           genre_ids: res.genre_ids,
         };
       });
-    
-      return ans.filter((movie:MovieType) => movie.title !== undefined && movie.poster_path !== undefined && movie.poster_path !== null);
+      return ans.filter(
+        (movie: MovieType) =>
+          movie.title !== undefined && movie.poster_path !== undefined && movie.poster_path !== null
+      );
     }
-    // movie.title !== undefined || || movie.poster_path !== undefined
   } catch (err) {
-    console.log(err);
-    // return err
+    // console.log(err);
   }
 };
 

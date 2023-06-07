@@ -55,6 +55,7 @@ header {
   height: 60px;
   color: white;
   text-decoration: none;
+  user-select: none;
 }
 .menu-item svg {
   font-size: 20px;
@@ -63,6 +64,10 @@ header {
   color: #da2f68;
   text-shadow: 0px 0px 14px #da2f68;
 }
+.menu-item.disable{
+  cursor: not-allowed;
+}
+
 .header-search {
   height: 30px;
   padding: 0 10px;

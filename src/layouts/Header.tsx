@@ -18,6 +18,7 @@ export const Header = () => {
 
   const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
+      console.log("need clear");
       navigate("/search/" + searchInputValue);
     }
   };
@@ -37,7 +38,13 @@ export const Header = () => {
           <NavLink className="menu-item" to="/movies" onClick={closeBurgerMenu}>
             Movies
           </NavLink>
-          <NavLink className="menu-item" to="/tv" onClick={closeBurgerMenu}>
+          <NavLink
+            className="menu-item disable"
+            to="/tv"
+            onClick={
+              // closeBurgerMenu
+              (e) => e.preventDefault()
+            }>
             TV-Shows
           </NavLink>
           <input

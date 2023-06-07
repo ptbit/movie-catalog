@@ -42,10 +42,15 @@ export const getMoviesForRedux = createAsyncThunk<MovieType[] | boolean, GetMovi
   }
 );
 
-export const getSearchMovies = createAsyncThunk<MovieType[], string>(
+type searchParamsType = {
+  query: string,
+  page: number
+
+}
+export const getSearchMovies = createAsyncThunk<MovieType[], searchParamsType >(
   "movies/getSearchMovies",
   async function (params) {
-    const response = await IMDB.getSearchData({ query: params });
+    const response = await IMDB.getSearchData({ query: params.query, page: params.page });
     return response ? response : [];
   }
 );

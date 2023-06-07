@@ -16,6 +16,10 @@ export const MoviePage = () => {
   const team = useAppSelector((state) => state.movie.team);
   const similarMovies = useAppSelector((state) => state.movie.similarMovies);
 
+  let movieDetailsPageStyle = {};
+  similarMovies.length > 0
+    ? (movieDetailsPageStyle = { paddingBottom: "0" })
+    : (movieDetailsPageStyle = { paddingBottom: "150px" });
   const params = useParams();
 
   const movieId = params.id === undefined ? 0 : +params.id;
@@ -28,7 +32,7 @@ export const MoviePage = () => {
   }, [params]);
 
   return (
-    <div className={styles.movie_details_page}>
+    <div className={styles.movie_details_page} style={movieDetailsPageStyle}>
       <div className={styles.background_logo}>
         <img
           src={"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.background}
@@ -107,24 +111,28 @@ export const MoviePage = () => {
         </div>
       </div>
 
-      <div className={styles.movie_details_similarMovie__Section}>
-        <h2 className={styles.movie_details_similarMovie__Title}>Similar Movies (API opinion)</h2>
-        <div className={styles.movie_details_similarMovie}>
-          {similarMovies.map(
-            ({ id, poster_path, title, vote_average, release_date, genre_ids }) => (
-              <SimilarMovieCard
-                key={id}
-                id={id}
-                poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + poster_path}
-                title={title}
-                vote_average={vote_average}
-                release_date={release_date}
-                genre_ids={genre_ids}
-              />
-            )
-          )}
+      {similarMovies.length > 0 ? (
+        <div className={styles.movie_details_similarMovie__Section}>
+          <h2 className={styles.movie_details_similarMovie__Title}>Similar Movies (API opinion)</h2>
+          <div className={styles.movie_details_similarMovie}>
+            {similarMovies.map(
+              ({ id, poster_path, title, vote_average, release_date, genre_ids }) => (
+                <SimilarMovieCard
+                  key={id}
+                  id={id}
+                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + poster_path}
+                  title={title}
+                  vote_average={vote_average}
+                  release_date={release_date}
+                  genre_ids={genre_ids}
+                />
+              )
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
