@@ -1,6 +1,18 @@
+import { IMDB } from "../../services/IMDB";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 export const Home = () => {
+  const [heroImgUrl, setHeroImgUrl] = useState("");
+  useEffect(() => {
+    getHeroImg();
+  }, []);
+
+  const getHeroImg = async () => {
+    const imgUrl = await IMDB.getRandomPoster();
+    setHeroImgUrl(imgUrl);
+  };
+
   return (
     <div className={styles.home_page}>
       <div className={styles.hero_banner}>
@@ -8,7 +20,7 @@ export const Home = () => {
           <span className={styles.hero_background}>
             <img
               className={styles.hero_img}
-              src="https://image.tmdb.org/t/p/original/94TIUEhuwv8PhdIADEvSuwPljS5.jpg"></img>
+              src={"https://image.tmdb.org/t/p/original/" + heroImgUrl}></img>
           </span>
         </div>
 

@@ -233,6 +233,15 @@ const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefine
   }
 };
 
+const getRandomPoster = async () => {
+  const { data } = await axios.get(API_URL + "movie/upcoming", {
+    headers,
+  });
+  const upcomingMovie = data.results[Math.floor(Math.random() * data.results.length)];
+
+  return upcomingMovie.backdrop_path;
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
@@ -241,4 +250,5 @@ export const IMDB = {
   getMovieCredits,
   getSimilarMovies,
   getSearchData,
+  getRandomPoster,
 };
