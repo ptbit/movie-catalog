@@ -1,11 +1,20 @@
-import { IMDB } from "../../services/IMDB";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { IMDB } from "../../services/IMDB";
+import { getTrending } from "../../store/trendingSlice";
+import { MovieCard } from "../Movies/MovieCard";
 import styles from "./styles.module.css";
 
 export const Home = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
+  const appDispatch = useAppDispatch();
+
+  const trending = useAppSelector((state) => state.trending.trending);
+  console.log(trending);
+
   useEffect(() => {
     getHeroImg();
+    appDispatch(getTrending());
   }, []);
 
   const getHeroImg = async () => {
@@ -35,6 +44,28 @@ export const Home = () => {
             <div className={styles.search_row}>
               <input type="text" placeholder="Search for a movie or tv show...." />
               <button>Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.carouselSection}>
+        <div className={styles.carouselHeader}>
+          <span className={styles.carouselTitle}>Trending</span>
+        </div>
+        <div className={styles.carousel}>
+          <div className={styles.contentWrapper}>
+            <div className={styles.carouselItems}>
+              {trending.map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
+                  title={movie.title}
+                  vote_average={movie.vote_average}
+                  release_date={movie.release_date}
+                  genre_ids={movie.genre_ids}
+                  id={movie.id}
+                />
+              ))}
             </div>
           </div>
         </div>

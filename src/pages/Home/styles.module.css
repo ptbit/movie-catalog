@@ -21,6 +21,8 @@
   overflow: hidden;
 }
 .hero_background {
+  height: 100%;
+  width: 100%;
   color: transparent;
   display: inline-block;
 }
@@ -83,10 +85,55 @@
   width: 150px;
   height: 60px;
   font-size: 18px;
-  background: linear-gradient(98.37deg, #f89e00 .99%, #da2f68 100%);
+  background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
   color: #fff;
   outline: 0;
   border: 0;
   border-radius: 0 30px 30px 0;
   cursor: pointer;
+}
+
+/* 770px */
+@media screen and (width < 770px) {
+  .hero_title {
+    font-size: 50px;
+    font-weight: 700;
+  }
+  .hero_description {
+    font-size: 18px;
+  }
+}
+
+.carouselSection {
+  position: relative;
+  margin-bottom: 70px;
+}
+.carouselHeader {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+.carouselTitle {
+  font-size: 24px;
+  color: #fff;
+  font-weight: 400;
+}
+.carousel {
+  margin-bottom: 50px;
+}
+.contentWrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  /* border: 1px solid red; */
+}
+.carouselItems {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+  margin: 0;
+  padding: 0;
 }

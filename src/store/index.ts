@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import moviesReducer from "./moviesSlice";
 import movieReducer from "./movieSlice";
+import trendingReducer from "./trendingSlice";
 import selectedGenresReducer from "./selectedGenresSlice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     movies: moviesReducer,
     selectedGenres: selectedGenresReducer,
     movie: movieReducer,
+    trending: trendingReducer,
   },
 });
 

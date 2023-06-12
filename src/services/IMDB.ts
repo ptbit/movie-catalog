@@ -233,13 +233,29 @@ const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefine
   }
 };
 
-const getRandomPoster = async () => {
+const getRandomPoster = async ():Promise<string> => {
   const { data } = await axios.get(API_URL + "movie/upcoming", {
     headers,
   });
   const upcomingMovie = data.results[Math.floor(Math.random() * data.results.length)];
 
   return upcomingMovie.backdrop_path;
+};
+
+const getTrendingMovies = async (): Promise<MovieType[]> => {
+  const data = await axios.get(API_URL + "/trending/movie/day", { headers });
+
+  const resp = data.data.results;
+  return resp.map((res: MovieType) => {
+    return {
+      id: res.id,
+      poster_path: res.poster_path,
+      title: res.title,
+      vote_average: res.vote_average.toFixed(1),
+      release_date: res.release_date,
+      genre_ids: res.genre_ids,
+    };
+  });
 };
 
 export const IMDB = {
@@ -251,4 +267,5 @@ export const IMDB = {
   getSimilarMovies,
   getSearchData,
   getRandomPoster,
+  getTrendingMovies
 };
