@@ -258,6 +258,22 @@ const getTrendingMovies = async (): Promise<MovieType[]> => {
   });
 };
 
+const getTopRatedMovies = async (): Promise<MovieType[]> => {
+  const data = await axios.get(API_URL + "/movie/top_rated", { headers });
+
+  const resp = data.data.results;
+  return resp.map((res: MovieType) => {
+    return {
+      id: res.id,
+      poster_path: res.poster_path,
+      title: res.title,
+      vote_average: res.vote_average.toFixed(1),
+      release_date: res.release_date,
+      genre_ids: res.genre_ids,
+    };
+  });
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
@@ -267,5 +283,6 @@ export const IMDB = {
   getSimilarMovies,
   getSearchData,
   getRandomPoster,
-  getTrendingMovies
+  getTrendingMovies,
+  getTopRatedMovies
 };
