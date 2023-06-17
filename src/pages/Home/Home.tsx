@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IMDB } from "../../services/IMDB";
 import { getTrending } from "../../store/trendingSlice";
 import { getTopRated } from "../../store/topRatedSlice";
 import { MovieCard } from "../Movies/MovieCard";
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-
   const trending = useAppSelector((state) => state.trending.trending);
   const topRated = useAppSelector((state) => state.topRated.topRated);
-  // console.log(topRated);
 
   useEffect(() => {
     getHeroImg();
@@ -23,6 +24,16 @@ export const Home = () => {
   const getHeroImg = async () => {
     const imgUrl = await IMDB.getRandomPoster();
     setHeroImgUrl(imgUrl);
+  };
+
+  const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
+    if (e.key === "Enter" && searchInputValue !== "") {
+      navigate("/search/" + searchInputValue);
+    }
+  };
+
+  const searchInputChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchInputValue(e.currentTarget.value);
   };
 
   return (
@@ -45,8 +56,21 @@ export const Home = () => {
               Millions of movies, TV shows and people to discover. Explore now.
             </p>
             <div className={styles.search_row}>
-              <input type="text" placeholder="Search for a movie or tv show...." />
-              <button>Search</button>
+              <input
+                type="text"
+                placeholder="Search for a movie or tv show...."
+                value={searchInputValue}
+                onKeyDown={startSearchHandler}
+                onChange={searchInputChangeHandler}
+              />
+              <button
+                onClick={() => {
+                  if (searchInputValue !== "") {
+                    navigate("/search/" + searchInputValue);
+                  }
+                }}>
+                Search
+              </button>
             </div>
           </div>
         </div>

@@ -29,11 +29,9 @@
 }
 @keyframes mobileMenu {
   from {
-    /* pushes the sun down past the viewport */
-    top: 0;
+      top: 0;
   }
   to {
-    /* returns the sun to its default position */
     top: 60px;
   }
 }

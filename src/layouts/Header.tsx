@@ -17,8 +17,7 @@ export const Header = () => {
   };
 
   const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      console.log("need clear");
+    if (e.key === "Enter" && searchInputValue !== "") {
       navigate("/search/" + searchInputValue);
     }
   };
@@ -47,30 +46,34 @@ export const Header = () => {
             }>
             TV-Shows
           </NavLink>
-          <input
-            className="header-search"
-            type="text"
-            placeholder="Search ..."
-            onKeyDown={startSearchHandler}
-            onChange={searchInputChangeHandler}
-            value={searchInputValue}
-          />
-          <div className="menu-item">
-            <AiOutlineSearch
-              onClick={() => {
-                navigate("/search/" + searchInputValue);
-              }}
+          <div className="menu-item search-container">
+            <input
+              className="header-search"
+              type="text"
+              placeholder="Search ..."
+              onKeyDown={startSearchHandler}
+              onChange={searchInputChangeHandler}
+              value={searchInputValue}
             />
+            <div className="menu-search-btn">
+              <AiOutlineSearch
+                onClick={() => {
+                  if (searchInputValue !== "") {
+                    navigate("/search/" + searchInputValue);
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
 
         <div className="menu-container mobile">
-          <NavLink className="menu-item" to="/">
+          {/* <NavLink className="menu-item" to="/">
             <AiOutlineSearch />
-          </NavLink>
-          <NavLink className="menu-item" to="/">
+          </NavLink> */}
+          <div className="burger-menu-btn">
             <AiOutlineMenu onClick={handleBurgerMenu} />
-          </NavLink>
+          </div>
         </div>
       </div>
     </header>
