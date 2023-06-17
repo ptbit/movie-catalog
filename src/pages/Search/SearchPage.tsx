@@ -17,8 +17,9 @@ export const SearchPage = () => {
 
   useEffect(() => {
     appDispatch(clearMoviesList());
+    window.scrollTo(0, 0);
   }, []);
-  
+
   useEffect(() => {
     appDispatch(getSearchMovies({ query: searchReq, page: moviesPage }));
   }, [searchReq, moviesPage]);

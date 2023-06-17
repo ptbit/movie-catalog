@@ -75,7 +75,7 @@ const moviesSlice = createSlice({
     });
 
     builder.addCase(getSearchMovies.fulfilled, (state, action) => {
-      action.payload?.forEach((movie) => state.movies.push(movie));
+      action.payload.forEach((movie) => state.movies.push(movie));
     });
   },
 });

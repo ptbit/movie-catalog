@@ -20,6 +20,7 @@ export const Movies: FC = () => {
 
   useEffect(() => {
     appDispatch(clearMoviesList());
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {

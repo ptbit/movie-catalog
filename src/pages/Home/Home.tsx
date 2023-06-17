@@ -16,6 +16,7 @@ export const Home = () => {
   const topRated = useAppSelector((state) => state.topRated.topRated);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getHeroImg();
     appDispatch(getTrending());
     appDispatch(getTopRated());
