@@ -200,7 +200,6 @@ type ParamsType = {
 };
 
 const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefined> => {
-  console.log("params.page", params.page);
   try {
     const data = await axios.get(API_URL + "search/multi", {
       headers,

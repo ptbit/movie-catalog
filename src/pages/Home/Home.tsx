@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IMDB } from "../../services/IMDB";
 import { getTrending } from "../../store/trendingSlice";
 import { getTopRated } from "../../store/topRatedSlice";
-import { MovieCard } from "../Movies/MovieCard";
-import styles from "./styles.module.css";
+import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.css";
 
 export const Home = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");

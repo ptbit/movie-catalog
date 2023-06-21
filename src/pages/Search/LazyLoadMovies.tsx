@@ -1,5 +1,6 @@
+import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { MovieType } from "../../types/movie";
-import { MovieCard } from "./MovieCard";
+// import { MovieCard } from "./MovieCard";
 import styles from "./styles.module.css";
 
 interface LazyLoadMoviesProps {
@@ -11,6 +12,8 @@ function LazyLoadMovies({ movies }: LazyLoadMoviesProps) {
     <div className={styles.movie_page__content}>
       {movies.map((movie) => (
         <MovieCard
+          genre_ids={[]}
+          vote_average={-1}
           key={movie.id}
           poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
           title={movie.title}

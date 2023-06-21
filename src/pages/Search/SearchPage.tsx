@@ -17,6 +17,7 @@ export const SearchPage = () => {
 
   useEffect(() => {
     appDispatch(clearMoviesList());
+    setMoviesPage(1)
     window.scrollTo(0, 0);
   }, []);
 

@@ -2,15 +2,7 @@ import styles from "./styles.module.css";
 import NoPoster from "../../assets/no-poster.png";
 import { Link } from "react-router-dom";
 import { Genres } from "../../services/Genres";
-
-interface MovieCardProps {
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids: number[];
-  id: number;
-}
+import { MovieType } from "../../types/movie";
 
 export const MovieCard = ({
   poster_path,
@@ -19,8 +11,7 @@ export const MovieCard = ({
   release_date,
   genre_ids,
   id,
-}: MovieCardProps) => {
-  
+}: MovieType) => {
   return (
     <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
@@ -32,16 +23,19 @@ export const MovieCard = ({
           )}
         </span>
 
-        <div className={styles.circleRating}>
-          <span className={styles.rating_text}>{vote_average}</span>
-        </div>
+        {vote_average !== -1 ? (
+          <div className={styles.circleRating}>
+            <span className={styles.rating_text}>{vote_average}</span>
+          </div>
+        ) : (
+          <></>
+        )}
+
         <div className={styles.genres}>
           {genre_ids.map((genreId: number) => {
             return (
               <div className={styles.genre} key={genreId}>
-                {
-                  Genres.getGenreNameById(genreId)
-                }
+                {Genres.getGenreNameById(genreId)}
               </div>
             );
           })}

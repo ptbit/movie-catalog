@@ -1,10 +1,10 @@
 import axios from "axios";
 import { GenreType } from "../types/genre";
-import { API_KEY, API_URL } from "../utils/constants";
+import { API_URL, HEADERS as headers } from "../utils/constants";
 
 const getGenres = async () => {
-  const reqUrl = API_URL + "genre/movie/list?" + API_KEY;
-  const data = await axios.get(reqUrl);
+  const reqUrl = API_URL + "genre/movie/list";
+  const data = await axios.get(reqUrl, { headers });
   if (data.status != 200) {
     return false;
   }

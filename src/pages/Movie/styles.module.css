@@ -1,6 +1,6 @@
 .movie_details_page {
   min-height: 100vh;
-  
+
   background-color: #04152d;
   color: white;
 }
@@ -140,17 +140,17 @@
 .actors_row {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 15px;
   overflow-x: scroll;
 }
 .actor_item {
+  margin-bottom: 10px;
   width: 138px;
   min-width: 138px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 10px;
+  text-align: center;
 }
 .actor_avatar > img {
   width: 100%;
@@ -163,11 +163,10 @@
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 10px;
-  padding: 0 5px;
+  /* padding: 0 5px; */
 }
 .actor_role {
   opacity: 0.5;
-  margin-bottom: 10px;
 }
 /* --------------SIMILAR SECTION */
 .movie_details_similarMovie__Section {

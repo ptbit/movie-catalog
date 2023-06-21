@@ -1,5 +1,5 @@
+import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { MovieType } from "../../types/movie";
-import { MovieCard } from "./MovieCard";
 import styles from "./styles.module.css";
 
 interface LazyLoadMoviesProps {
