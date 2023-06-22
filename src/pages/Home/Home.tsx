@@ -3,15 +3,16 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IMDB } from "../../services/IMDB";
 import { getTrending } from "../../store/trendingSlice";
 import { getTopRated } from "../../store/topRatedSlice";
-import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { CarouselSection } from "./CarouselSection";
 
 export const Home = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
+  
   const trending = useAppSelector((state) => state.trending.trending);
   const topRated = useAppSelector((state) => state.topRated.topRated);
 
@@ -76,52 +77,10 @@ export const Home = () => {
           </div>
         </div>
       </div>
-
-      <div className={styles.carouselSection}>
-        <div className={styles.carouselHeader}>
-          <span className={styles.carouselTitle}>Trending</span>
-        </div>
-        <div className={styles.carousel}>
-          <div className={styles.contentWrapper}>
-            <div className={styles.carouselItems}>
-              {trending.map((movie) => (
-                <MovieCard
-                  key={movie.id}
-                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
-                  title={movie.title}
-                  vote_average={movie.vote_average}
-                  release_date={movie.release_date}
-                  genre_ids={movie.genre_ids}
-                  id={movie.id}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.carouselSection}>
-        <div className={styles.carouselHeader}>
-          <span className={styles.carouselTitle}>Top Rated</span>
-        </div>
-        <div className={styles.carousel}>
-          <div className={styles.contentWrapper}>
-            <div className={styles.carouselItems}>
-              {topRated.map((movie) => (
-                <MovieCard
-                  key={movie.id}
-                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
-                  title={movie.title}
-                  vote_average={movie.vote_average}
-                  release_date={movie.release_date}
-                  genre_ids={movie.genre_ids}
-                  id={movie.id}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+ 
+      <CarouselSection movies={trending} sectionTitle="Trending" />
+      <CarouselSection movies={topRated} sectionTitle="Top Rated" />
+      
     </div>
   );
 };

@@ -12,13 +12,12 @@ function LazyLoadMovies({ movies }: LazyLoadMoviesProps) {
     <div className={styles.movie_page__content}>
       {movies.map((movie) => (
         <MovieCard
-          genre_ids={[]}
-          vote_average={-1}
           key={movie.id}
           poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + movie.poster_path}
           title={movie.title}
           release_date={movie.release_date}
           id={movie.id}
+          searchMode={true}
         />
       ))}
     </div>

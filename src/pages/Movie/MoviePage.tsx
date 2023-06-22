@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getMovie, getSimilar, getTeam } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
+import { runtimeToStr } from "../../utils/helpers";
 import { ActorItem } from "./ActorItem";
 import { SimilarMovieCard } from "./SimilarMovieCard";
-import { runtimeToStr } from "../../utils/constants";
 import styles from "./styles.module.css";
 
 export const MoviePage = () => {

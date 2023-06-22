@@ -2,16 +2,26 @@ import styles from "./styles.module.css";
 import NoPoster from "../../assets/no-poster.png";
 import { Link } from "react-router-dom";
 import { Genres } from "../../services/Genres";
-import { MovieType } from "../../types/movie";
+
+type MovieCardPropsType = {
+  id: number;
+  poster_path: string;
+  title: string;
+  vote_average?: number;
+  release_date: string;
+  genre_ids?: number[];
+  searchMode?: boolean;
+};
 
 export const MovieCard = ({
   poster_path,
   title,
   vote_average,
   release_date,
-  genre_ids,
+  genre_ids=[],
   id,
-}: MovieType) => {
+  searchMode = false,
+}: MovieCardPropsType) => {
   return (
     <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
@@ -23,23 +33,24 @@ export const MovieCard = ({
           )}
         </span>
 
-        {vote_average !== -1 ? (
-          <div className={styles.circleRating}>
-            <span className={styles.rating_text}>{vote_average}</span>
-          </div>
+        {!searchMode ? (
+          <>
+            <div className={styles.circleRating}>
+              <span className={styles.rating_text}>{vote_average}</span>
+            </div>
+            <div className={styles.genres}>
+              {genre_ids.map((genreId: number) => {
+                return (
+                  <div className={styles.genre} key={genreId}>
+                    {Genres.getGenreNameById(genreId)}
+                  </div>
+                );
+              })}
+            </div>
+          </>
         ) : (
           <></>
         )}
-
-        <div className={styles.genres}>
-          {genre_ids.map((genreId: number) => {
-            return (
-              <div className={styles.genre} key={genreId}>
-                {Genres.getGenreNameById(genreId)}
-              </div>
-            );
-          })}
-        </div>
       </div>
 
       <div className={styles.text_block}>
