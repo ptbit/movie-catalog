@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-import LazyLoadMovies from "./LazyLoadMovies";
+// import LazyLoadMovies from "../../components/LazyLoadMovies/LazyLoadMovies";
 
 import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -8,6 +8,7 @@ import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";
 import { SortingSelect } from "./SortingSelect";
 import { GenresSelect } from "./GenresSelect";
 import { SelectedGenres } from "./SelectedGenres";
+import { LazyLoadMovies } from "../../components/LazyLoadMovies/LazyLoadMovies";
 
 export const Movies: FC = () => {
   const appDispatch = useAppDispatch();

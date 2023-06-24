@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GenreType } from "../types/genre";
-import { MovieType } from "../types/movie";
+import { CastType, CrewType, FullMovieType, MovieType } from "../types/movie";
 import { API_URL, HEADERS as headers } from "../utils/constants";
 
 const getGenres = async (): Promise<GenreType[] | boolean> => {
@@ -31,7 +31,7 @@ const getMoviesForGenre = async (
       id: res.id,
       poster_path: res.poster_path,
       title: res.title,
-      vote_average: res.vote_average,
+      vote_average: res.vote_average.toFixed(1),
       release_date: res.release_date,
       genre_ids: res.genre_ids,
     };
@@ -55,7 +55,7 @@ const getMovies = async (
         id: res.id,
         poster_path: res.poster_path,
         title: res.title,
-        vote_average: res.vote_average,
+        vote_average: res.vote_average.toFixed(1),
         release_date: res.release_date,
         genre_ids: res.genre_ids,
       };
@@ -65,20 +65,7 @@ const getMovies = async (
   }
 };
 
-type GetMovieResponseType = {
-  poster_path: string;
-  title: string;
-  subtitle: string;
-  vote_average: number;
-  release_date: string;
-  genres: string[];
-  background: string;
-  overview: string;
-  status: string;
-  runtime: number;
-};
-
-const getMovie = async (movieId: number): Promise<GetMovieResponseType> => {
+const getMovie = async (movieId: number): Promise<FullMovieType> => {
   const reqUrl = API_URL + "movie/" + movieId;
   const data = await axios.get(reqUrl, { headers });
 
@@ -102,37 +89,6 @@ const getMovie = async (movieId: number): Promise<GetMovieResponseType> => {
     runtime: data.data.runtime,
   };
   return response;
-};
-
-type CastType = {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: null | string;
-  cast_id?: number;
-  character?: string;
-  credit_id: string;
-  order?: number;
-  department?: string;
-  job?: string;
-};
-
-type CrewType = {
-  adult: false;
-  credit_id: string;
-  department: string;
-  gender: number;
-  id: number;
-  job: string;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string;
 };
 
 type GetMovieCreditsResponseType = {
@@ -185,7 +141,7 @@ const getSimilarMovies = async (movieId: number): Promise<MovieType[]> => {
       id: res.id,
       poster_path: res.poster_path,
       title: res.title,
-      vote_average: res.vote_average,
+      vote_average: res.vote_average.toFixed(1),
       release_date: res.release_date,
       genre_ids: res.genre_ids,
     };
@@ -243,8 +199,8 @@ const getRandomPoster = async ():Promise<string> => {
 
 const getTrendingMovies = async (): Promise<MovieType[]> => {
   const data = await axios.get(API_URL + "/trending/movie/day", { headers });
-
   const resp = data.data.results;
+
   return resp.map((res: MovieType) => {
     return {
       id: res.id,
@@ -259,8 +215,8 @@ const getTrendingMovies = async (): Promise<MovieType[]> => {
 
 const getTopRatedMovies = async (): Promise<MovieType[]> => {
   const data = await axios.get(API_URL + "/movie/top_rated", { headers });
-
   const resp = data.data.results;
+
   return resp.map((res: MovieType) => {
     return {
       id: res.id,

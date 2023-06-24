@@ -1,0 +1,8 @@
+.movie_page__content {
+  height: auto;
+  overflow: auto;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+  overflow: hidden;
+}

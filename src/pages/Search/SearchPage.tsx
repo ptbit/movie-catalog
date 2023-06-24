@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
+import { LazyLoadMovies } from "../../components/LazyLoadMovies/LazyLoadMovies";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { clearMoviesList, getSearchMovies } from "../../store/moviesSlice";
-import LazyLoadMovies from "./LazyLoadMovies";
+// import LazyLoadMovies from "../../components/LazyLoadMovies/LazyLoadMovies";
 import styles from "./styles.module.css";
 
 export const SearchPage = () => {
@@ -11,13 +12,13 @@ export const SearchPage = () => {
   const appDispatch = useAppDispatch();
 
   const searchReq = params.search ? params.search : "";
-  const morePages = useAppSelector((state) => state.movies.morePages);
   const movies = useAppSelector((state) => state.movies.movies);
+  const morePages = useAppSelector((state) => state.movies.morePages);
   const [moviesPage, setMoviesPage] = useState(1);
 
   useEffect(() => {
     appDispatch(clearMoviesList());
-    setMoviesPage(1)
+    setMoviesPage(1);
     window.scrollTo(0, 0);
   }, []);
 

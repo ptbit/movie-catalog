@@ -1,14 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IMDB } from "../services/IMDB";
-
-type MovieType = {
-  id: number;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids: number[];
-};
+import { MovieType } from "../types/movie";
 
 type MovieStateType = {
   movies: MovieType[];
@@ -43,11 +35,11 @@ export const getMoviesForRedux = createAsyncThunk<MovieType[] | boolean, GetMovi
 );
 
 type searchParamsType = {
-  query: string,
-  page: number
+  query: string;
+  page: number;
+};
 
-}
-export const getSearchMovies = createAsyncThunk<MovieType[], searchParamsType >(
+export const getSearchMovies = createAsyncThunk<MovieType[], searchParamsType>(
   "movies/getSearchMovies",
   async function (params) {
     const response = await IMDB.getSearchData({ query: params.query, page: params.page });
