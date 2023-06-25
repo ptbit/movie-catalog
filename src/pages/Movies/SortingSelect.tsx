@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { useAppDispatch } from "../../hooks";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { sortByList } from "../../utils/constants";
@@ -10,7 +10,7 @@ type SortingSelectProps = {
   setMoviesPage: Dispatch<SetStateAction<number>>;
 };
 
-export const SortingSelect = ({ sortBy, setSortBy, setMoviesPage }: SortingSelectProps) => {
+export const SortingSelect: FC<SortingSelectProps> = ({ sortBy, setSortBy, setMoviesPage }) => {
   const appDispatch = useAppDispatch();
 
   const sortingClick = (sortingType: string) => {

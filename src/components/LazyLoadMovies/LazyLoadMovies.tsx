@@ -1,12 +1,9 @@
+import { FC } from "react";
 import { MovieCard } from "../MovieCard/MovieCard";
 import { MovieType } from "../../types/movie";
 import styles from "./styles.module.css";
 
-interface LazyLoadMoviesProps {
-  movies: MovieType[];
-}
-
-export const LazyLoadMovies = ({ movies }: LazyLoadMoviesProps) => {
+export const LazyLoadMovies: FC<{ movies: MovieType[] }> = ({ movies }) => {
   return (
     <div className={styles.movie_page__content}>
       {movies.map((movie: MovieType) => (

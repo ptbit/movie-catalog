@@ -1,9 +1,10 @@
-import { useState, KeyboardEvent } from "react";
+import Logo from "../../assets/logo.svg";
+import { useAppDispatch } from "../../hooks";
+import { clearMoviesList } from "../../store/moviesSlice";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useState, KeyboardEvent } from "react";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import Logo from "../assets/logo.svg";
-import { useAppDispatch } from "../hooks";
-import { clearMoviesList } from "../store/moviesSlice";
+import styles from "./styles.module.css";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -20,8 +21,15 @@ export const Header = () => {
   };
 
   const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter" && searchInputValue !== "") {
+    if (e.key === "Enter") {
+      goToSearchPage();
+    }
+  };
+
+  const goToSearchPage = () => {
+    if (searchInputValue !== "") {
       appDispatch(clearMoviesList());
+      handleBurgerMenu();
       navigate("/search/" + searchInputValue);
     }
   };
@@ -31,52 +39,43 @@ export const Header = () => {
   };
 
   return (
-    <header className={burgerMenuHide ? "header-mobile" : ""}>
-      <div className="content-wrapper">
-        <NavLink className="logo-container" to="/">
+    <header className={burgerMenuHide ? styles.header_mobile : ""}>
+      <div className={styles.content_wrapper}>
+        <NavLink className={styles.logo_container} to="/">
           <img src={Logo} alt="logo" />
         </NavLink>
-
-        <div className={burgerMenuHide ? "menu-container desktop" : "menu-container desktop hide"}>
-          <NavLink className="menu-item" to="/movies" onClick={closeBurgerMenu}>
+        <div
+          className={
+            burgerMenuHide
+              ? `${styles.menu_container} ${styles.desktop}`
+              : `${styles.menu_container} ${styles.desktop} ${styles.hide}`
+          }>
+          <NavLink className={styles.menu_item} to="/movies" onClick={closeBurgerMenu}>
             Movies
           </NavLink>
           <NavLink
-            className="menu-item disable"
+            className={`${styles.menu_item} ${styles.disable}`}
             to="/tv"
-            onClick={
-              // closeBurgerMenu
-              (e) => e.preventDefault()
-            }>
+            onClick={(e) => e.preventDefault()}>
             TV-Shows
           </NavLink>
-          <div className="menu-item search-container">
+          <div className={`${styles.menu_item} ${styles.search_container}`}>
             <input
-              className="header-search"
+              className={styles.header_search}
               type="text"
               placeholder="Search ..."
               onKeyDown={startSearchHandler}
               onChange={searchInputChangeHandler}
               value={searchInputValue}
             />
-            <div className="menu-search-btn">
-              <AiOutlineSearch
-                onClick={() => {
-                  if (searchInputValue !== "") {
-                    appDispatch(clearMoviesList());
-                    navigate("/search/" + searchInputValue);
-                  }
-                }}
-              />
+            <div className={styles.menu_search_btn}>
+              <AiOutlineSearch onClick={() => goToSearchPage()} />
             </div>
           </div>
         </div>
 
-        <div className="menu-container mobile">
-          {/* <NavLink className="menu-item" to="/">
-            <AiOutlineSearch />
-          </NavLink> */}
-          <div className="burger-menu-btn">
+        <div className={`${styles.menu_container} ${styles.mobile}`}>
+          <div className={styles.burger_menu_btn}>
             <AiOutlineMenu onClick={handleBurgerMenu} />
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { MovieType } from "../../types/movie";
 import styles from "./styles.module.css";
@@ -7,9 +8,7 @@ type CarouselSectionPropsType = {
   sectionTitle: string;
 };
 
-export const CarouselSection = ({ movies, sectionTitle }: CarouselSectionPropsType) => {
-  // console.log('CarouselSection',sectionTitle)
-
+export const CarouselSection: FC<CarouselSectionPropsType> = ({ movies, sectionTitle }) => {
   return (
     <div className={styles.carouselSection}>
       <div className={styles.carouselHeader}>
@@ -27,7 +26,6 @@ export const CarouselSection = ({ movies, sectionTitle }: CarouselSectionPropsTy
                 release_date={movie.release_date}
                 genre_ids={movie.genre_ids}
                 id={movie.id}
-               
               />
             ))}
           </div>

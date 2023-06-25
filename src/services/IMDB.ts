@@ -141,7 +141,7 @@ const getSimilarMovies = async (movieId: number): Promise<MovieType[]> => {
       id: res.id,
       poster_path: res.poster_path,
       title: res.title,
-      vote_average: res.vote_average.toFixed(1),
+      vote_average: +res.vote_average.toFixed(1),
       release_date: res.release_date,
       genre_ids: res.genre_ids,
     };
@@ -173,7 +173,7 @@ const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefine
           id: res.id,
           poster_path: res.poster_path,
           title: res.title,
-          vote_average: res.vote_average,
+          vote_average: +res.vote_average.toFixed(1),
           release_date: res.release_date,
           genre_ids: res.genre_ids,
         };
@@ -206,7 +206,7 @@ const getTrendingMovies = async (): Promise<MovieType[]> => {
       id: res.id,
       poster_path: res.poster_path,
       title: res.title,
-      vote_average: res.vote_average.toFixed(1),
+      vote_average: +res.vote_average.toFixed(1),
       release_date: res.release_date,
       genre_ids: res.genre_ids,
     };
@@ -222,7 +222,7 @@ const getTopRatedMovies = async (): Promise<MovieType[]> => {
       id: res.id,
       poster_path: res.poster_path,
       title: res.title,
-      vote_average: res.vote_average.toFixed(1),
+      vote_average: +res.vote_average.toFixed(1),
       release_date: res.release_date,
       genre_ids: res.genre_ids,
     };

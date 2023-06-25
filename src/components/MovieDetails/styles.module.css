@@ -1,0 +1,60 @@
+.movie_details_content {
+}
+.movie_details_title {
+  font-size: 34px;
+  line-height: 44px;
+  font-weight: 500;
+}
+.movie_details_subtitle {
+  font-size: 20px;
+  line-height: 28px;
+  margin-bottom: 15px;
+  font-style: italic;
+  opacity: 0.5;
+  font-weight: 500;
+}
+.movie_details_genres {
+  display: flex;
+  flex-flow: wrap;
+  position: relative;
+  gap: 5px;
+  margin-bottom: 25px;
+}
+.movie_details_genre {
+  background-color: #da2f68;
+  padding: 3px 5px;
+  font-size: 12px;
+  border-radius: 4px;
+  color: #fff;
+  white-space: nowrap;
+}
+.movie_details_overview {
+  margin-bottom: 25px;
+}
+.movie_details_overview_title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.movie_details_overview_description {
+  line-height: 24px;
+  padding-right: 100px;
+}
+.movie_details_info {
+  padding: 15px 0;
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.movie_details_info_item {
+  margin-right: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  opacity: 1;
+  line-height: 24px;
+}
+.movie_details_info_item_title {
+  font-weight: 600;
+  margin-right: 10px;
+}
+.movie_details_info_item_content {
+  opacity: 0.5;
+}

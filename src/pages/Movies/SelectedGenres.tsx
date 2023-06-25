@@ -1,18 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Genres } from "../../services/Genres";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { removeSelectedGenre } from "../../store/selectedGenresSlice";
 import styles from "./styles.module.css";
 
-type SelectedGenresProps = {
+export const SelectedGenres: FC<{
   setMoviesPage: Dispatch<SetStateAction<number>>;
-};
-
-export const SelectedGenres = ({ setMoviesPage }: SelectedGenresProps) => {
+}> = ({ setMoviesPage }) => {
   const appDispatch = useAppDispatch();
-  const genres = Genres.allGenres()
-  // const genres = useAppSelector((state) => state.genres.genres);
+  const genres = Genres.allGenres();
 
   const selectedGenres = useAppSelector((state) => state.selectedGenres.selectedGenres);
   const getGenreNameById = (genreId: number): string | undefined => {

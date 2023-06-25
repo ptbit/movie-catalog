@@ -1,27 +1,18 @@
-import styles from "./styles.module.css";
-import NoPoster from "../../assets/no-poster.png";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Genres } from "../../services/Genres";
+import { MovieType } from "../../types/movie";
+import NoPoster from "../../assets/no-poster.png";
+import styles from "./styles.module.css";
 
-type MovieCardPropsType = {
-  id: number;
-  poster_path: string;
-  title: string;
-  vote_average?: number;
-  release_date: string;
-  genre_ids?: number[];
-  searchMode?: boolean;
-};
-
-export const MovieCard = ({
+export const MovieCard: FC<MovieType> = ({
   poster_path,
   title,
   vote_average,
   release_date,
-  genre_ids=[],
+  genre_ids = [],
   id,
-  searchMode = false,
-}: MovieCardPropsType) => {
+}) => {
   return (
     <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
@@ -32,25 +23,18 @@ export const MovieCard = ({
             <img className={styles.poster} src={poster_path} alt={title}></img>
           )}
         </span>
-
-        {!searchMode ? (
-          <>
-            <div className={styles.circleRating}>
-              <span className={styles.rating_text}>{vote_average}</span>
-            </div>
-            <div className={styles.genres}>
-              {genre_ids.map((genreId: number) => {
-                return (
-                  <div className={styles.genre} key={genreId}>
-                    {Genres.getGenreNameById(genreId)}
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
+        <div className={styles.circleRating}>
+          <span className={styles.rating_text}>{vote_average}</span>
+        </div>
+        <div className={styles.genres}>
+          {genre_ids.map((genreId: number) => {
+            return (
+              <div className={styles.genre} key={genreId}>
+                {Genres.getGenreNameById(genreId)}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <div className={styles.text_block}>

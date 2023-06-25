@@ -1,18 +1,18 @@
-import { KeyboardEvent, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
 import { IMDB } from "../../services/IMDB";
 import { getTrending } from "../../store/trendingSlice";
 import { getTopRated } from "../../store/topRatedSlice";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
 import { CarouselSection } from "./CarouselSection";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { FC, KeyboardEvent, useEffect, useState } from "react";
+import styles from "./styles.module.css";
 
-export const Home = () => {
+export const Home: FC = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  
+
   const trending = useAppSelector((state) => state.trending.trending);
   const topRated = useAppSelector((state) => state.topRated.topRated);
 
@@ -29,7 +29,13 @@ export const Home = () => {
   };
 
   const startSearchHandler = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter" && searchInputValue !== "") {
+    if (e.key === "Enter") {
+      goToSearchPage();
+    }
+  };
+
+  const goToSearchPage = () => {
+    if (searchInputValue !== "") {
       navigate("/search/" + searchInputValue);
     }
   };
@@ -39,7 +45,7 @@ export const Home = () => {
   };
 
   return (
-    <div className={styles.home_page}>
+    <>
       <div className={styles.hero_banner}>
         <div className={styles.hero_image}>
           <span className={styles.hero_background}>
@@ -65,22 +71,14 @@ export const Home = () => {
                 onKeyDown={startSearchHandler}
                 onChange={searchInputChangeHandler}
               />
-              <button
-                onClick={() => {
-                  if (searchInputValue !== "") {
-                    navigate("/search/" + searchInputValue);
-                  }
-                }}>
-                Search
-              </button>
+              <button onClick={() => goToSearchPage()}>Search</button>
             </div>
           </div>
         </div>
       </div>
- 
+
       <CarouselSection movies={trending} sectionTitle="Trending" />
       <CarouselSection movies={topRated} sectionTitle="Top Rated" />
-      
-    </div>
+    </>
   );
 };

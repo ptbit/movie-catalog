@@ -1,7 +1,5 @@
 import styles from "./styles.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
-// import LazyLoadMovies from "../../components/LazyLoadMovies/LazyLoadMovies";
-
 import { FC, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { clearMoviesList, getMoviesForRedux } from "../../store/moviesSlice";

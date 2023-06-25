@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
 import { LazyLoadMovies } from "../../components/LazyLoadMovies/LazyLoadMovies";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { clearMoviesList, getSearchMovies } from "../../store/moviesSlice";
-// import LazyLoadMovies from "../../components/LazyLoadMovies/LazyLoadMovies";
 import styles from "./styles.module.css";
 
-export const SearchPage = () => {
+export const SearchPage: FC = () => {
   const params = useParams();
   const appDispatch = useAppDispatch();
 

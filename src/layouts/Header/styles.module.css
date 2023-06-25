@@ -1,0 +1,129 @@
+header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(3.5px);
+  display: flex;
+  align-items: center;
+  transition: all ease 0.5s;
+  z-index: 2;
+}
+.content_wrapper {
+  width: 100%;
+  height: 60px;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo_container {
+  display: flex;
+  cursor: pointer;
+}
+.logo_container > img {
+  height: 50px;
+}
+.menu_container {
+  display: flex;
+}
+.menu_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+
+  margin: 0 15px;
+  height: 60px;
+  color: white;
+  text-decoration: none;
+  user-select: none;
+}
+.search_container {
+   gap: 10px;
+}
+.burger_menu_btn svg,
+.menu_search_btn svg {
+  font-size: 20px;
+  color: #c0c3c6;
+  cursor: pointer;
+}
+.burger_menu_btn svg:hover,
+.menu_search_btn svg:hover {
+  color: #da2f68;
+}
+
+.menu_item:hover {
+  color: #da2f68;
+  text-shadow: 0px 0px 14px #da2f68;
+}
+.menu_item.disable {
+  cursor: not-allowed;
+}
+
+.header_search {
+  height: 30px;
+  padding: 0 10px;
+  align-self: center;
+  border: none;
+  border-bottom: 1px dashed white;
+  background-color: transparent;
+  font-size: 20px;
+  color: white;
+  outline: none;
+  transition: all 0.5s ease-in-out;
+  text-align: center;
+}
+.header_search:focus {
+  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+}
+.desktop {
+  display: flex;
+}
+.mobile {
+  display: none;
+}
+
+
+@media (max-width: 800px) {
+  .header-mobile {
+    background-color: #020c1b;
+  }
+  .mobile {
+    display: flex;
+  }
+  .content-wrapper {
+    position: relative;
+  }
+  .desktop {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #020c1b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    animation: mobileMenu 0.3s ease forwards;
+  }
+  a.menu-item:nth-child(3) {
+    display: none;
+  }
+  .hide {
+    display: none;
+  }
+}
+@keyframes mobileMenu {
+  from {
+      top: 0;
+  }
+  to {
+    top: 60px;
+  }
+}
