@@ -58,3 +58,9 @@
 .movie_details_info_item_content {
   opacity: 0.5;
 }
+
+@media screen and (width < 768px) {
+  .movie_details_overview_description{
+    padding-right: 0px;
+  }
+}

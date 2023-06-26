@@ -122,13 +122,25 @@
   padding: 0;
 }
 
-/* 770px */
-@media screen and (width < 770px) {
+@media (width < 1024px) {
+}
+
+@media screen and (width < 768px) {
   .hero_title {
     font-size: 50px;
     font-weight: 700;
   }
   .hero_description {
     font-size: 18px;
+  }
+  .search_row {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .search_row input,
+  .search_row button {
+    width: 100%;
+    padding: 0 20px;
+    border-radius: 30px;
   }
 }

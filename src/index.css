@@ -14,7 +14,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-/* HEADER */
 
 
 /* --- */
@@ -30,59 +29,4 @@ code {
   min-height: 700px;
 }
 
-/* --- FOOTER --- */
-footer {
-  background-color: #020c1b;
-  color: #fff;
-  padding: 50px 0;
-  /* position: relative; */
-}
-.footer_container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.footer_links {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-  margin-bottom: 30px;
-}
-.footer_link {
-  cursor: pointer;
-  transition: all ease 0.3s;
-}
-.footer_link:hover {
-  color: #da2f68;
-}
-.footer_content {
-  line-height: 20px;
-  opacity: 0.5;
-  text-align: center;
-  max-width: 800px;
-  margin-bottom: 30px;
-}
-.footer_socials {
-  display: flex;
-  gap: 10px;
-}
-.footer_socials__social {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  font-size: 20px;
-  background-color: #04152d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all ease 0.3s;
-  color: white;
-}
-.footer_socials__social:hover {
-  box-shadow: 0 0 0.625em #da2f68;
-  color: #da2f68;
-}
+

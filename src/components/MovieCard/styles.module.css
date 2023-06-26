@@ -1,4 +1,3 @@
-
 .movie_card {
   width: calc(20% - 16px);
   margin-bottom: 25px;
@@ -104,4 +103,21 @@
   color: white;
   justify-content: center;
   font-size: 35px;
+}
+
+@media (width < 1024px) {
+  .movie_card {
+    width: calc(25% - 16px);
+  }
+}
+
+@media (width < 768px) {
+  .movie_card {
+    width: calc(50% - 10px);
+  }
+  .poster_holder img{
+    width: 100%;
+    height: 100%;
+
+  }
 }

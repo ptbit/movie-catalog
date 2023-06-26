@@ -40,7 +40,8 @@ export const MoviePage = () => {
       </div>
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
-          <img src={"https://image.tmdb.org/t/p/w300_and_h450_bestv2" + movie.poster_path} alt="" />
+        {/* w1920_and_h800_multi_faces/4t0oBFrJyweYPt0hocW6RUa0b6H. */}
+          <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
           <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
         <MovieDetails movie={movie} />

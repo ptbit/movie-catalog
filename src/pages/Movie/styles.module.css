@@ -55,7 +55,6 @@
   font-weight: 700;
 }
 
-
 /* --------------ACTOR SECTION */
 .movie_details_castSectionShadow {
   position: absolute;
@@ -122,4 +121,35 @@
   display: flex;
   gap: 20px;
   overflow-x: scroll;
+}
+@media (width < 768px) {
+  .background_logo {
+    display: none;
+  }
+  .movie_details_container {
+    position: static;
+    flex-wrap: wrap;
+    padding: 100px 20px 0px;
+  }
+
+  .movie_details_poster {
+    width: 100%;
+    max-height: none;
+    max-width: none;
+  }
+  .movie_details_poster img {
+    width: 100%;
+    height: 100%;
+  }
+  .movie_details_castSectionShadow {
+    display: none;
+  }
+  .movie_details_castSection {
+    position: static;
+    margin-top: 20px;
+  }
+  .movie_details_similarMovie__section {
+    margin-top: 20px;
+    max-height: none;
+  }
 }
