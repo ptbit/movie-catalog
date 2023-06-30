@@ -24,3 +24,7 @@
   flex-shrink: 0;
   align-self: center;
 }
+.search_page_noResult {
+  font-size: 24px;
+  color: #173d77;
+}

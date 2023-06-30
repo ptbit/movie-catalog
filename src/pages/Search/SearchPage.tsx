@@ -29,7 +29,13 @@ export const SearchPage: FC = () => {
     <div className={styles.movie_page}>
       <div className={styles.movie_page__wrapper}>
         <div className={styles.movie_page__header}>
-          <div className={styles.movie_page__title}>Search results of &apos;{searchReq}&apos;</div>
+          {movies.length === 0 ? (
+            <div className={styles.search_page_noResult}>Sorry, Results not found!</div>
+          ) : (
+            <div className={styles.movie_page__title}>
+              Search results of &apos;{searchReq}&apos;
+            </div>
+          )}
         </div>
         <InfiniteScroll
           dataLength={movies.length}
