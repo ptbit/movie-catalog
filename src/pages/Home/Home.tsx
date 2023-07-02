@@ -6,6 +6,7 @@ import { CarouselSection } from "./CarouselSection";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { FC, KeyboardEvent, useEffect, useState } from "react";
 import styles from "./styles.module.css";
+// import { addSearchRequest } from "../../store/searchSlice";
 
 export const Home: FC = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
@@ -36,6 +37,7 @@ export const Home: FC = () => {
 
   const goToSearchPage = () => {
     if (searchInputValue !== "") {
+      // appDispatch(addSearchRequest(searchInputValue));
       navigate("/search/" + searchInputValue);
     }
   };

@@ -50,3 +50,9 @@ export type CrewType = {
   popularity: number;
   profile_path: string;
 };
+
+export type searchDataResponseType = {
+  data: MovieType[];
+  page: number;
+  total_pages: number;
+};

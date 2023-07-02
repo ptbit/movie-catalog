@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IMDB } from "../services/IMDB";
-import { MovieType } from "../types/movie";
+import { MovieType, searchDataResponseType } from "../types/movie";
 
 type MovieStateType = {
   movies: MovieType[];
@@ -39,11 +39,11 @@ type searchParamsType = {
   page: number;
 };
 
-export const getSearchMovies = createAsyncThunk<MovieType[], searchParamsType>(
+export const getSearchMovies = createAsyncThunk<any, searchParamsType>(
   "movies/getSearchMovies",
   async function (params) {
     const response = await IMDB.getSearchData({ query: params.query, page: params.page });
-    return response ? response : [];
+    return response ? response : {};
   }
 );
 
@@ -53,6 +53,9 @@ const moviesSlice = createSlice({
   reducers: {
     clearMoviesList(state) {
       state.movies = [];
+    },
+    stopMorePages(state) {
+      state.morePages = false;
     },
   },
 
@@ -67,10 +70,14 @@ const moviesSlice = createSlice({
     });
 
     builder.addCase(getSearchMovies.fulfilled, (state, action) => {
-      action.payload.forEach((movie) => state.movies.push(movie));
+      action.payload.data?.forEach((movie: MovieType) => state.movies.push(movie));
+      state.morePages = true;
+      if (action.payload.page === action.payload.total_pages) {
+        state.morePages = false;
+      }
     });
   },
 });
 
 export default moviesSlice.reducer;
-export const { clearMoviesList } = moviesSlice.actions;
+export const { clearMoviesList, stopMorePages } = moviesSlice.actions;

@@ -1,17 +1,19 @@
 import Logo from "../../assets/logo.svg";
-import { useAppDispatch } from "../../hooks";
-import { clearMoviesList } from "../../store/moviesSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { clearMoviesList, stopMorePages } from "../../store/moviesSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, KeyboardEvent } from "react";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
 import styles from "./styles.module.css";
+// import { addSearchRequest } from "../../store/searchSlice";
 
 export const Header = () => {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const [burgerMenuHide, setBurgerMenuHide] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
-
+  // const searchReq = useAppSelector((state) => state.searchRequest.searchRequest);
+  
   const handleBurgerMenu = () => {
     setBurgerMenuHide(!burgerMenuHide);
   };
@@ -28,14 +30,17 @@ export const Header = () => {
 
   const goToSearchPage = () => {
     if (searchInputValue !== "") {
-      appDispatch(clearMoviesList());
       handleBurgerMenu();
+      appDispatch(stopMorePages())
+      appDispatch(clearMoviesList());
+      // appDispatch(addSearchRequest(searchInputValue));
       navigate("/search/" + searchInputValue);
     }
   };
 
   const searchInputChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchInputValue(e.currentTarget.value);
+    
   };
 
   return (

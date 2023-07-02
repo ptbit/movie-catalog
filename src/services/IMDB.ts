@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GenreType } from "../types/genre";
-import { CastType, CrewType, FullMovieType, MovieType } from "../types/movie";
+import { CastType, CrewType, FullMovieType, MovieType, searchDataResponseType } from "../types/movie";
 import { API_URL, HEADERS as headers } from "../utils/constants";
 
 const getGenres = async (): Promise<GenreType[] | boolean> => {
@@ -155,40 +155,56 @@ type ParamsType = {
   query: string;
 };
 
-const getSearchData = async (params: ParamsType): Promise<MovieType[] | undefined> => {
+
+const getSearchData = async (params: ParamsType): Promise<searchDataResponseType | undefined> => {
   try {
     const data = await axios.get(API_URL + "search/multi", {
       headers,
       params,
     });
-
     if (params.page === undefined) {
       params.page = 1;
     }
     const resp = data.data.results;
 
     if (data.data.total_pages >= params.page) {
-      const ans = resp.map((res: MovieType): MovieType => {
+      type resType = {
+        id: number;
+        poster_path: string;
+        title: string;
+        vote_average: number;
+        release_date: string;
+        genre_ids: number[];
+        name: string;
+      };
+      const ans = resp.map((res: resType): MovieType => {
         return {
           id: res.id,
-          poster_path: res.poster_path,
-          title: res.title,
-          vote_average: +res.vote_average.toFixed(1),
+          poster_path: res.poster_path ? res.poster_path : "",
+          title: res.title ? res.title : res.name,
+          vote_average: res.vote_average ? +res.vote_average.toFixed(1) : 0,
           release_date: res.release_date,
           genre_ids: res.genre_ids,
         };
       });
-      return ans.filter(
+      const response: searchDataResponseType = {
+        data: [],
+        page: data.data.page,
+        total_pages: data.data.total_pages,
+      };
+      response.data = ans.filter(
         (movie: MovieType) =>
-          movie.title !== undefined && movie.poster_path !== undefined && movie.poster_path !== null
+          movie.title !== undefined && movie.poster_path !== "" && movie.poster_path !== null
       );
+      // console.log("response:::", response.data);
+      return response;
     }
   } catch (err) {
     // console.log(err);
   }
 };
 
-const getRandomPoster = async ():Promise<string> => {
+const getRandomPoster = async (): Promise<string> => {
   const { data } = await axios.get(API_URL + "movie/upcoming", {
     headers,
   });
@@ -239,5 +255,5 @@ export const IMDB = {
   getSearchData,
   getRandomPoster,
   getTrendingMovies,
-  getTopRatedMovies
+  getTopRatedMovies,
 };
