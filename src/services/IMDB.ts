@@ -1,6 +1,12 @@
 import axios from "axios";
 import { GenreType } from "../types/genre";
-import { CastType, CrewType, FullMovieType, MovieType, searchDataResponseType } from "../types/movie";
+import {
+  CastType,
+  CrewType,
+  FullMovieType,
+  MovieType,
+  searchDataResponseType,
+} from "../types/movie";
 import { API_URL, HEADERS as headers } from "../utils/constants";
 
 const getGenres = async (): Promise<GenreType[] | boolean> => {
@@ -155,7 +161,6 @@ type ParamsType = {
   query: string;
 };
 
-
 const getSearchData = async (params: ParamsType): Promise<searchDataResponseType | undefined> => {
   try {
     const data = await axios.get(API_URL + "search/multi", {
@@ -245,6 +250,26 @@ const getTopRatedMovies = async (): Promise<MovieType[]> => {
   });
 };
 
+const getVideosForMovie = async (id: number) => {
+  const data = await axios.get(API_URL + "/movie/" + id + "/videos", { headers });
+  console.log( data.data.results)
+  return data.data.results
+ };
+
+const getOfficialTrailer = async (id: number): Promise<string> => {
+  // console.log("getOfficialTrailer", id);
+  const data = await axios.get(API_URL + "/movie/" + id + "/videos", { headers });
+  const allVideos = data.data.results;
+  let officialTrailerKey = "";
+  allVideos.forEach((video: any) => {
+    if (video.name === "Official Trailer") {
+      officialTrailerKey = video.key;
+    }
+  });
+  // console.log("officialTrailerKey:", officialTrailerKey);
+  return officialTrailerKey
+};
+
 export const IMDB = {
   getGenres,
   getMoviesForGenre,
@@ -256,4 +281,6 @@ export const IMDB = {
   getRandomPoster,
   getTrendingMovies,
   getTopRatedMovies,
+  getVideosForMovie,
+  getOfficialTrailer,
 };

@@ -4,7 +4,7 @@ export type MovieType = {
   title: string;
   vote_average: number;
   release_date: string;
-  genre_ids: number[]
+  genre_ids: number[];
 };
 
 export type FullMovieType = {
@@ -35,7 +35,7 @@ export type CastType = {
   order?: number;
   department?: string;
   job?: string;
-}; 
+};
 
 export type CrewType = {
   adult: false;
@@ -55,4 +55,17 @@ export type searchDataResponseType = {
   data: MovieType[];
   page: number;
   total_pages: number;
+};
+
+export type VideoType = {
+  id: string;
+  iso_3166_1: string;
+  iso_639_1: string;
+  key: string;
+  name: string;
+  official: boolean;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
 };

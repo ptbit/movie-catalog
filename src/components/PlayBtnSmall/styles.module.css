@@ -1,0 +1,53 @@
+.play_zone__container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.play_zone__header {
+  position: relative;
+}
+.play_zone__container svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+}
+
+.play_zone__poster {
+  margin-bottom: 15px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 20px;
+}
+.play_zone__header:hover .play_zone__poster {
+  opacity: 0.3;
+  transition: all 0.5s ease-in-out;
+}
+.circle {
+  stroke: #fff;
+  stroke-dasharray: 650;
+  stroke-dashoffset: 1300;
+  transition: all 0.5s ease-in-out;
+}
+
+.triangle {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 480;
+  stroke: #fff;
+  transform: translateY(0);
+  transition: all 0.7s ease-in-out;
+}
+
+.play_zone__container:hover .triangle,
+.play_zone__container:hover .circle {
+  stroke-dashoffset: 0;
+  stroke: #da2f68;
+}
+
+.play_zone__title {
+  font-size: 16px;
+  line-height: 24px;
+}

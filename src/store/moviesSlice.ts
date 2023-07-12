@@ -43,6 +43,7 @@ export const getSearchMovies = createAsyncThunk<any, searchParamsType>(
   "movies/getSearchMovies",
   async function (params) {
     const response = await IMDB.getSearchData({ query: params.query, page: params.page });
+    console.log(response)
     return response ? response : {};
   }
 );

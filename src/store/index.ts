@@ -3,6 +3,7 @@ import moviesReducer from "./moviesSlice";
 import movieReducer from "./movieSlice";
 import trendingReducer from "./trendingSlice";
 import topRatedReducer from "./topRatedSlice";
+import videosReducer from "./videosSlice";
 import selectedGenresReducer from "./selectedGenresSlice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     movie: movieReducer,
     trending: trendingReducer,
     topRated: topRatedReducer,
+    videos: videosReducer,
   },
 });
 

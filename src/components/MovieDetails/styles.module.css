@@ -60,7 +60,7 @@
 }
 
 @media screen and (width < 768px) {
-  .movie_details_overview_description{
+  .movie_details_overview_description {
     padding-right: 0px;
   }
 }

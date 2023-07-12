@@ -51,7 +51,9 @@ export const getSimilar = createAsyncThunk<MovieType[], number>(
 const movieSlice = createSlice({
   name: "movie",
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getMovie.fulfilled, (state, action) => {

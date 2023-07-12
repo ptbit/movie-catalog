@@ -2,9 +2,15 @@ import { FC } from "react";
 import { useAppSelector } from "../../hooks";
 import { FullMovieType } from "../../types/movie";
 import { runtimeToStr } from "../../utils/helpers";
+import { PlayVideoBtn } from "../PlayVideoBtn/PlayVideoBtn";
 import styles from "./styles.module.css";
 
-export const MovieDetails: FC<{ movie: FullMovieType }> = ({ movie }) => {
+export const MovieDetails: FC<{
+  movie: FullMovieType;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  videoKey: string;
+  setModalVideoKey: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ movie, setModalActive, videoKey, setModalVideoKey }) => {
   const director = useAppSelector((state) => state.movie.director);
   const writer = useAppSelector((state) => state.movie.writer);
 
@@ -21,6 +27,14 @@ export const MovieDetails: FC<{ movie: FullMovieType }> = ({ movie }) => {
           );
         })}
       </div>
+      <div className={styles.movie_details_overview}>
+        <PlayVideoBtn
+          setModalActive={setModalActive}
+          videoKey={videoKey}
+          setModalVideoKey={setModalVideoKey}
+        />
+      </div>
+
       <div className={styles.movie_details_overview}>
         <div className={styles.movie_details_overview_title}>Overview</div>
         <div className={styles.movie_details_overview_description}>{movie.overview}</div>
