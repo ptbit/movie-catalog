@@ -8,7 +8,7 @@ import { getMovie, getSimilar, getTeam } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
 import { getVideos } from "../../store/videosSlice";
 import { ActorItem } from "./ActorItem";
-import { VideoItem } from "./VideoItem";
+import { VideoItem } from "../../components/VideoItem/VideoItem";
 import styles from "./styles.module.css";
 
 export const MoviePage = () => {
@@ -45,6 +45,7 @@ export const MoviePage = () => {
           alt={movie.background}
         />
       </div>
+      <div className={styles.movie_details_castSectionShadow}></div>
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
           {/* w1920_and_h800_multi_faces/4t0oBFrJyweYPt0hocW6RUa0b6H. */}
@@ -59,9 +60,7 @@ export const MoviePage = () => {
         />
       </div>
 
-      {/* <div className={styles.movie_details_castSectionShadow}></div> */}
-
-      {/* <div className={styles.movie_details_castSection}>
+      <div className={styles.movie_details_castSection}>
         <h2>Top Cast</h2>
         <div className={styles.actors_row}>
           {team.map((el, index) => {
@@ -75,36 +74,7 @@ export const MoviePage = () => {
             );
           })}
         </div>
-      </div> */}
-
-      {/* {similarMovies.length > 0 && (
-        <div className={styles.movie_details_similarMovie__section}>
-          <h2 className={styles.movie_details_similarMovie__title}>Similar Movies (API opinion)</h2>
-          <div className={styles.movie_details_similarMovie}>
-            {similarMovies.map(
-              ({ id, poster_path, title, vote_average, release_date, genre_ids }) => (
-                <MovieCard
-                  key={id}
-                  id={id}
-                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + poster_path}
-                  title={title}
-                  vote_average={vote_average}
-                  release_date={release_date}
-                  genre_ids={genre_ids}
-                />
-              )
-            )}
-          </div>
-        </div>
-      )} */}
-
-      {/* <div className={styles.movie_details_videos__section}>
-        <h2 className={styles.movie_details_videos__title}>Official Videos</h2>
-        <div className={styles.movie_details_videos__content}>
-          <VideoItem />
-
-        </div>
-      </div> */}
+      </div>
 
       {videos.length > 0 && (
         <div className={styles.movie_details_videos__section}>
@@ -125,6 +95,27 @@ export const MoviePage = () => {
                 setModalVideoKey={setModalVideoKey}
               />
             ))}
+          </div>
+        </div>
+      )}
+
+      {similarMovies.length > 0 && (
+        <div className={styles.movie_details_similarMovie__section}>
+          <h2 className={styles.movie_details_similarMovie__title}>Similar Movies (API opinion)</h2>
+          <div className={styles.movie_details_similarMovie}>
+            {similarMovies.map(
+              ({ id, poster_path, title, vote_average, release_date, genre_ids }) => (
+                <MovieCard
+                  key={id}
+                  id={id}
+                  poster_path={"https://image.tmdb.org/t/p/w220_and_h330_face" + poster_path}
+                  title={title}
+                  vote_average={vote_average}
+                  release_date={release_date}
+                  genre_ids={genre_ids}
+                />
+              )
+            )}
           </div>
         </div>
       )}

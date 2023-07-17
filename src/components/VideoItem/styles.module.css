@@ -1,0 +1,22 @@
+.video_item {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 23%;
+  margin-bottom: 10px;
+  gap: 15px;
+  position: relative;
+}
+
+@media (width < 1024px) {
+  .video_item {
+    gap: 10px;
+    width: calc(31% + 5px);
+  }
+}
+
+@media (width < 768px) {
+  .video_item {
+    width: calc(50% - 10px);
+  }
+}
