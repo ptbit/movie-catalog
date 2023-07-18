@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { MovieCard } from "../../components/MovieCard/MovieCard";
@@ -12,13 +12,13 @@ import { VideoItem } from "../../components/VideoItem/VideoItem";
 import styles from "./styles.module.css";
 
 export const MoviePage = () => {
-  const [modalActive, setModalActive] = useState(false);
-  const [modalVideoKey, setModalVideoKey] = useState("");
   const appDispatch = useAppDispatch();
   const movie = useAppSelector((state) => state.movie.movie);
   const team = useAppSelector((state) => state.movie.team);
+  const modalActive = useAppSelector((state) => state.movie.videoModalActive);
   const similarMovies = useAppSelector((state) => state.movie.similarMovies);
   const videos = useAppSelector((state) => state.videos.videos);
+  const modalVideoKey = useAppSelector((state) => state.movie.videoKey);
 
   let movieDetailsPageStyle = {};
   similarMovies.length > 0
@@ -52,12 +52,7 @@ export const MoviePage = () => {
           <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
           <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
-        <MovieDetails
-          movie={movie}
-          setModalActive={setModalActive}
-          videoKey={videos.length > 0 ? videos[0].key : ""}
-          setModalVideoKey={setModalVideoKey}
-        />
+        <MovieDetails movie={movie} videoKey={videos.length > 0 ? videos[0].key : ""} />
       </div>
 
       <div className={styles.movie_details_castSection}>
@@ -80,9 +75,7 @@ export const MoviePage = () => {
         <div className={styles.movie_details_videos__section}>
           <Modal
             modalActive={modalActive}
-            setModalActive={setModalActive}
             videoKey={modalVideoKey}
-            setModalVideoKey={setModalVideoKey}
           />
           <h2 className={styles.movie_details_videos__title}>Official Videos</h2>
           <div className={styles.movie_details_videos__content}>
@@ -91,8 +84,6 @@ export const MoviePage = () => {
                 key={id}
                 videoKey={key}
                 name={name}
-                setModalActive={setModalActive}
-                setModalVideoKey={setModalVideoKey}
               />
             ))}
           </div>

@@ -1,3 +1,6 @@
+/* .movie_details_page * {
+border: 1px solid greenyellow;
+} */
 .movie_details_page {
   min-height: 700px;
   padding-top: 120px;
@@ -126,7 +129,7 @@
   padding: 0 20px;
 }
 .movie_details_videos__title {
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 .movie_details_videos__content {
   width: 100%;
@@ -157,6 +160,7 @@
     position: static;
     flex-wrap: wrap;
     padding: 0px 20px;
+    margin-bottom: 20px;
   }
 
   .movie_details_poster {
@@ -171,12 +175,15 @@
   .movie_details_castSectionShadow {
     display: none;
   }
+  .movie_details_videos__section {
+    margin-bottom: 20px;
+  }
   .movie_details_castSection {
     position: static;
-    margin-top: 20px;
+    margin-bottom: 20px;
   }
   .movie_details_similarMovie__section {
-    margin-top: 20px;
+    margin-bottom: 20px;
     max-height: none;
   }
 }

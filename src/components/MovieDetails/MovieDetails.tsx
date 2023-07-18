@@ -7,10 +7,8 @@ import styles from "./styles.module.css";
 
 export const MovieDetails: FC<{
   movie: FullMovieType;
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   videoKey: string;
-  setModalVideoKey: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ movie, setModalActive, videoKey, setModalVideoKey }) => {
+}> = ({ movie, videoKey }) => {
   const director = useAppSelector((state) => state.movie.director);
   const writer = useAppSelector((state) => state.movie.writer);
 
@@ -27,13 +25,13 @@ export const MovieDetails: FC<{
           );
         })}
       </div>
-      <div className={styles.movie_details_overview}>
-        <PlayVideoBtn
-          setModalActive={setModalActive}
-          videoKey={videoKey}
-          setModalVideoKey={setModalVideoKey}
-        />
-      </div>
+      {videoKey !== "" ? (
+        <span className={styles.movie_details_overview}>
+          <PlayVideoBtn videoKey={videoKey} />
+        </span>
+      ) : (
+        <h2 className={styles.movie_details_overview}>No Official Video</h2>
+      )}
 
       <div className={styles.movie_details_overview}>
         <div className={styles.movie_details_overview_title}>Overview</div>

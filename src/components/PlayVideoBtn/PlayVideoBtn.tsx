@@ -1,26 +1,24 @@
 import { FC } from "react";
+import { useAppDispatch } from "../../hooks";
+import { openVideoModalActive, setVideoKey } from "../../store/movieSlice";
 import { PlayVideoSvg } from "./PlayVideoSvg";
 import styles from "./styles.module.css";
 
 type PlayVideoBtnProps = {
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   videoKey?: string;
-  setModalVideoKey?: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const PlayVideoBtn: FC<PlayVideoBtnProps> = ({ setModalActive,   videoKey,
-  setModalVideoKey, }) => {
+export const PlayVideoBtn: FC<PlayVideoBtnProps> = ({ videoKey }) => {
+  const appDispatch = useAppDispatch();
   return (
-    <div
+    <span
       className={styles.play_video_btn}
       onClick={() => {
-        setModalActive(true);
-        if (videoKey !== undefined && setModalVideoKey !== undefined) {
-          setModalVideoKey(videoKey);
-        }
+        appDispatch(openVideoModalActive());
+        videoKey !== undefined && appDispatch(setVideoKey(videoKey));
       }}>
       <PlayVideoSvg />
       <span className={styles.text}>Watch Trailer</span>
-    </div>
+    </span>
   );
 };

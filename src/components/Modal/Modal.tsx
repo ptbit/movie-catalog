@@ -1,25 +1,27 @@
 import { FC } from "react";
+import { useAppDispatch } from "../../hooks";
+import { closeVideoModalActive, setVideoKey } from "../../store/movieSlice";
 import ReactPlayer from "react-player";
 import styles from "./styles.module.css";
 
 type ModalProps = {
   modalActive: boolean;
-  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   videoKey: string;
-  setModalVideoKey: React.Dispatch<React.SetStateAction<string>>;
+  // setModalVideoKey: React.Dispatch<React.SetStateAction<string>>;
 };
 export const Modal: FC<ModalProps> = ({
   modalActive,
-  setModalActive,
   videoKey,
-  setModalVideoKey,
+  // setModalVideoKey,
 }) => {
+  const appDispatch = useAppDispatch();
   return (
     <div
       className={modalActive ? `${styles.modal} ${styles.active}` : `${styles.modal}`}
       onClick={() => {
-        setModalActive(false);
-        setModalVideoKey("");
+        appDispatch(closeVideoModalActive())
+        appDispatch(setVideoKey(''))
+        // setModalVideoKey("");
       }}>
       <div className={styles.modal_content}>
         <div className={styles.modalHeader}>

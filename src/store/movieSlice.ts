@@ -8,6 +8,8 @@ type MovieStateType = {
   director: string;
   writer: string;
   similarMovies: MovieType[];
+  videoModalActive: boolean;
+  videoKey: string;
 };
 
 const initialState: MovieStateType = {
@@ -16,6 +18,8 @@ const initialState: MovieStateType = {
   director: "",
   writer: "",
   similarMovies: [],
+  videoModalActive: false,
+  videoKey: ''
 };
 
 export const getMovie = createAsyncThunk<FullMovieType, number>(
@@ -52,7 +56,15 @@ const movieSlice = createSlice({
   name: "movie",
   initialState,
   reducers: {
-    
+    closeVideoModalActive(state) {
+      state.videoModalActive = false;
+    },
+    openVideoModalActive(state) {
+      state.videoModalActive = true;
+    },
+    setVideoKey(state, action) {
+      state.videoKey = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -71,3 +83,4 @@ const movieSlice = createSlice({
 });
 
 export default movieSlice.reducer;
+export const {closeVideoModalActive, openVideoModalActive, setVideoKey} = movieSlice.actions

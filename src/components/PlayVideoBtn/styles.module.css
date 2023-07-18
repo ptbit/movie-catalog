@@ -1,5 +1,6 @@
 .play_video_btn {
   margin-bottom: 15px;
+  width: fit-content;
   display: flex;
   align-items: center;
   cursor: pointer;
