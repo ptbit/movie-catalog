@@ -1,12 +1,14 @@
+import { FC } from "react";
 import noAvatar from "../../assets/no-avatar.png";
 import styles from "./styles.module.css";
+
 type ActorItemPropsType = {
   avatar: string;
   name: string;
   role: string;
 };
 
-export const ActorItem = ({ name, avatar, role }: ActorItemPropsType) => {
+export const ActorItem: FC<ActorItemPropsType> = ({ name, avatar, role }) => {
   if (avatar === "https://image.tmdb.org/t/p/w138_and_h175_facenull") {
     avatar = noAvatar;
   }

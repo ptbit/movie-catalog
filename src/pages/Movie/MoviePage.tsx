@@ -1,31 +1,26 @@
+import { FC } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { MovieDetails } from "../../components/MovieDetails/MovieDetails";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getMovie, getSimilar, getTeam } from "../../store/movieSlice";
+import { getMovie, getSimilar, getTeam, getVideos } from "../../store/movieSlice";
 import { clearMoviesList } from "../../store/moviesSlice";
-import { getVideos } from "../../store/videosSlice";
-import { ActorItem } from "./ActorItem";
+import { ActorItem } from "../../components/ActorItem/ActorItem";
 import { VideoItem } from "../../components/VideoItem/VideoItem";
 import styles from "./styles.module.css";
 
-export const MoviePage = () => {
+export const MoviePage:FC = () => {
   const appDispatch = useAppDispatch();
   const movie = useAppSelector((state) => state.movie.movie);
   const team = useAppSelector((state) => state.movie.team);
   const modalActive = useAppSelector((state) => state.movie.videoModalActive);
   const similarMovies = useAppSelector((state) => state.movie.similarMovies);
-  const videos = useAppSelector((state) => state.videos.videos);
+  const videos = useAppSelector((state) => state.movie.videos);
   const modalVideoKey = useAppSelector((state) => state.movie.videoKey);
 
-  let movieDetailsPageStyle = {};
-  similarMovies.length > 0
-    ? (movieDetailsPageStyle = { paddingBottom: "0" })
-    : (movieDetailsPageStyle = { paddingBottom: "150px" });
   const params = useParams();
-
   const movieId = params.id === undefined ? 0 : +params.id;
 
   useEffect(() => {
@@ -38,7 +33,7 @@ export const MoviePage = () => {
   }, [params]);
 
   return (
-    <div className={styles.movie_details_page} style={movieDetailsPageStyle}>
+    <div className={styles.movie_details_page}>
       <div className={styles.background_logo}>
         <img
           src={"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.background}
@@ -48,7 +43,6 @@ export const MoviePage = () => {
       <div className={styles.movie_details_castSectionShadow}></div>
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
-          {/* w1920_and_h800_multi_faces/4t0oBFrJyweYPt0hocW6RUa0b6H. */}
           <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
           <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
@@ -73,18 +67,11 @@ export const MoviePage = () => {
 
       {videos.length > 0 && (
         <div className={styles.movie_details_videos__section}>
-          <Modal
-            modalActive={modalActive}
-            videoKey={modalVideoKey}
-          />
+          <Modal modalActive={modalActive} videoKey={modalVideoKey} />
           <h2 className={styles.movie_details_videos__title}>Official Videos</h2>
           <div className={styles.movie_details_videos__content}>
             {videos.map(({ id, key, name }) => (
-              <VideoItem
-                key={id}
-                videoKey={key}
-                name={name}
-              />
+              <VideoItem key={id} videoKey={key} name={name} />
             ))}
           </div>
         </div>

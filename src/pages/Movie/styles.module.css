@@ -80,37 +80,13 @@ border: 1px solid greenyellow;
   display: flex;
   flex-direction: row;
   gap: 15px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
-.actor_item {
-  margin-bottom: 10px;
-  width: 138px;
-  min-width: 138px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  text-align: center;
-}
-.actor_avatar > img {
-  width: 100%;
-  height: 175px;
-  object-fit: cover;
-  object-position: center;
-  margin-bottom: 5px;
-}
-.actor_name {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-.actor_role {
-  opacity: 0.5;
-}
+
 /* --------------SIMILAR SECTION */
 .movie_details_similarMovie__section {
   max-height: 500px;
   max-width: 1200px;
-  /* margin: 475px auto 0px; */
   margin: 0 auto 50px;
   padding: 0 20px;
 }

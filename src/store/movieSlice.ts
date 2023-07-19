@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IMDB } from "../services/IMDB";
-import { CastType, FullMovieType, MovieType } from "../types/movie";
+import { CastType, FullMovieType, MovieType, VideoType } from "../types/movie";
 
 type MovieStateType = {
   movie: FullMovieType;
@@ -10,6 +10,7 @@ type MovieStateType = {
   similarMovies: MovieType[];
   videoModalActive: boolean;
   videoKey: string;
+  videos: VideoType[];
 };
 
 const initialState: MovieStateType = {
@@ -19,7 +20,8 @@ const initialState: MovieStateType = {
   writer: "",
   similarMovies: [],
   videoModalActive: false,
-  videoKey: ''
+  videoKey: "",
+  videos: [],
 };
 
 export const getMovie = createAsyncThunk<FullMovieType, number>(
@@ -52,6 +54,14 @@ export const getSimilar = createAsyncThunk<MovieType[], number>(
   }
 );
 
+export const getVideos = createAsyncThunk<VideoType[], number>(
+  "getVideos",
+  async function (id: number) {
+    const response = await IMDB.getVideosForMovie(id);
+    return response;
+  }
+);
+
 const movieSlice = createSlice({
   name: "movie",
   initialState,
@@ -79,8 +89,11 @@ const movieSlice = createSlice({
     builder.addCase(getSimilar.fulfilled, (state, action) => {
       state.similarMovies = action.payload;
     });
+    builder.addCase(getVideos.fulfilled, (state, action) => {
+      state.videos = action.payload;
+    });
   },
 });
 
 export default movieSlice.reducer;
-export const {closeVideoModalActive, openVideoModalActive, setVideoKey} = movieSlice.actions
+export const { closeVideoModalActive, openVideoModalActive, setVideoKey } = movieSlice.actions;
