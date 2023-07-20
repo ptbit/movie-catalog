@@ -15,9 +15,7 @@
   width: 50px;
   height: 50px;
 }
-
 .play_zone__poster {
-  margin-bottom: 15px;
   max-width: 100%;
   max-height: 100%;
   border-radius: 20px;
@@ -32,7 +30,6 @@
   stroke-dashoffset: 1300;
   transition: all 0.5s ease-in-out;
 }
-
 .triangle {
   stroke-dasharray: 240;
   stroke-dashoffset: 480;
@@ -40,14 +37,33 @@
   transform: translateY(0);
   transition: all 0.7s ease-in-out;
 }
-
 .play_zone__container:hover .triangle,
 .play_zone__container:hover .circle {
   stroke-dashoffset: 0;
   stroke: #da2f68;
 }
-
 .play_zone__title {
   font-size: 16px;
   line-height: 24px;
+  margin-top: 15px;
+}
+.play_video_btn {
+  margin-bottom: 15px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.text {
+  margin-left: 20px;
+  font-size: 20px;
+  transition: all 0.7s ease-in-out;
+}
+.play_video_btn:hover .triangle,
+.play_video_btn:hover .circle {
+  stroke-dashoffset: 0;
+  stroke: #da2f68;
+}
+.play_video_btn:hover .text {
+  color: #da2f68;
 }

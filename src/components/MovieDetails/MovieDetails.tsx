@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useAppSelector } from "../../hooks";
 import { FullMovieType } from "../../types/movie";
 import { runtimeToStr } from "../../utils/helpers";
-import { PlayVideoBtn } from "../PlayVideoBtn/PlayVideoBtn";
+import { PlayBtn } from "../PlayBtn/PlayBtn";
 import styles from "./styles.module.css";
 
 export const MovieDetails: FC<{
@@ -27,7 +27,7 @@ export const MovieDetails: FC<{
       </div>
       {videoKey !== "" ? (
         <span className={styles.movie_details_overview}>
-          <PlayVideoBtn videoKey={videoKey} />
+          <PlayBtn videoKey={videoKey} watchTrailerPlayVideoBtn={true} />
         </span>
       ) : (
         <h2 className={styles.movie_details_overview}>No Official Video</h2>

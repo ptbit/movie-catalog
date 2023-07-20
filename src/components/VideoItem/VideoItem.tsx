@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PlayBtnSmall } from "../PlayBtnSmall/PlayBtnSmall";
+import { PlayBtn } from "../PlayBtn/PlayBtn";
 import styles from "./styles.module.css";
 
 type videoItemType = {
@@ -10,7 +10,7 @@ type videoItemType = {
 export const VideoItem: FC<videoItemType> = ({ name, videoKey }) => {
   return (
     <div className={styles.video_item}>
-      <PlayBtnSmall videoKey={videoKey} name={name} />
+      <PlayBtn videoKey={videoKey} name={name} />
     </div>
   );
 };

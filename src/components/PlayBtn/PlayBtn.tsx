@@ -4,22 +4,30 @@ import { openVideoModalActive, setVideoKey } from "../../store/movieSlice";
 import { PlaySvg } from "./PlaySvg";
 import styles from "./styles.module.css";
 
-type PlayVideoBtnProps = {
+type PlayBtnProps = {
   videoKey?: string;
   name?: string;
+  watchTrailerPlayVideoBtn?: boolean;
 };
 
-export const PlayBtnSmall: FC<PlayVideoBtnProps> = ({
-  videoKey,
-  name,
-}) => {
+export const PlayBtn: FC<PlayBtnProps> = ({ videoKey, name, watchTrailerPlayVideoBtn = false }) => {
   const appDispatch = useAppDispatch();
-  return (
+  return watchTrailerPlayVideoBtn ? (
+    <span
+      className={styles.play_video_btn}
+      onClick={() => {
+        appDispatch(openVideoModalActive());
+        videoKey !== undefined && appDispatch(setVideoKey(videoKey));
+      }}>
+      <PlaySvg />
+      <span className={styles.text}>Watch Trailer</span>
+    </span>
+  ) : (
     <div
       className={styles.play_zone__container}
       onClick={() => {
-        appDispatch(openVideoModalActive())
-        videoKey !== undefined && appDispatch(setVideoKey(videoKey))
+        appDispatch(openVideoModalActive());
+        videoKey !== undefined && appDispatch(setVideoKey(videoKey));
       }}>
       <div className={styles.play_zone__header}>
         <img
