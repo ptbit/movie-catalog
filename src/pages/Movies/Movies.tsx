@@ -33,7 +33,7 @@ export const Movies: FC = () => {
   }, [selectedGenres, moviesPage, sortBy]);
 
   return (
-    <div className={styles.movie_page}>
+    <main className={styles.movie_page}>
       <div className={styles.movie_page__wrapper}>
         <div className={styles.movie_page__header}>
           <div className={styles.movie_page__title}>Explore Movies</div>
@@ -61,6 +61,6 @@ export const Movies: FC = () => {
           ""
         )}
       </div>
-    </div>
+    </main>
   );
 };

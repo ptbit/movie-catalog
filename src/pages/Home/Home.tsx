@@ -47,7 +47,7 @@ export const Home: FC = () => {
   };
 
   return (
-    <>
+    <main>
       <div className={styles.hero_banner}>
         <div className={styles.hero_image}>
           <span className={styles.hero_background}>
@@ -81,6 +81,6 @@ export const Home: FC = () => {
 
       <CarouselSection movies={trending} sectionTitle="Trending" />
       <CarouselSection movies={topRated} sectionTitle="Top Rated" />
-    </>
+    </main>
   );
 };
