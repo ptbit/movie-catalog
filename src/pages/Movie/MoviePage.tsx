@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, lazy } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
@@ -11,7 +11,7 @@ import { ActorItem } from "../../components/ActorItem/ActorItem";
 import { VideoItem } from "../../components/VideoItem/VideoItem";
 import styles from "./styles.module.css";
 
-export const MoviePage:FC = () => {
+export const MoviePage: FC = () => {
   const appDispatch = useAppDispatch();
   const movie = useAppSelector((state) => state.movie.movie);
   const team = useAppSelector((state) => state.movie.team);

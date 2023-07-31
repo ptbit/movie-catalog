@@ -1,5 +1,6 @@
 import { FC } from "react";
 import noAvatar from "../../assets/no-avatar.png";
+import { LazyLoadPic } from "../LazyLoadPic/LazyLoadPic";
 import styles from "./styles.module.css";
 
 type ActorItemPropsType = {
@@ -16,7 +17,7 @@ export const ActorItem: FC<ActorItemPropsType> = ({ name, avatar, role }) => {
   return (
     <div className={styles.actor_item}>
       <div className={styles.actor_avatar}>
-        <img src={avatar} alt={name} />
+        <LazyLoadPic imageSrc={avatar} imageAlt={name}/>
       </div>
       <div className={styles.actor_name}>{name}</div>
       <div className={styles.actor_role}>{role}</div>
