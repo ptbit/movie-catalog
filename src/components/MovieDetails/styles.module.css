@@ -29,9 +29,22 @@
   color: #fff;
   white-space: nowrap;
 }
-.movie_details_overview {
+.movie_details__row {
   margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
+.circular_rating {
+  max-width: 90px;
+  border-radius: 50%;
+}
+.circular_rating text {
+  font-weight: bold;
+  dominant-baseline: central !important;
+  user-select: none;
+}
+
 .movie_details_overview_title {
   font-size: 24px;
   margin-bottom: 10px;

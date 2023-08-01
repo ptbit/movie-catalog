@@ -38,7 +38,7 @@ const MoviePage: FC = () => {
   if (movie.poster_path != null) {
     movie_details_poster = "https://image.tmdb.org/t/p/original" + movie.poster_path;
   }
-  console.log("TEAM-", team);
+  
   return (
     <div className={styles.movie_details_page}>
       <div className={styles.background_logo}>
@@ -54,7 +54,6 @@ const MoviePage: FC = () => {
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
           <LazyLoadPic src={movie_details_poster} alt={movie.title} />
-          <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
         <MovieDetails movie={movie} videoKey={videos.length > 0 ? videos[0].key : ""} />
       </div>

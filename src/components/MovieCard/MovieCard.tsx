@@ -5,6 +5,7 @@ import { MovieType } from "../../types/movie";
 import NoPoster from "../../assets/no-poster.png";
 import styles from "./styles.module.css";
 import { LazyLoadPic } from "../LazyLoadPic/LazyLoadPic";
+import { CircularRating } from "../CircularRating/CircularRating";
 
 export const MovieCard: FC<MovieType> = ({
   poster_path,
@@ -25,7 +26,9 @@ export const MovieCard: FC<MovieType> = ({
           <LazyLoadPic src={poster_path} alt={title} className="movie_card__poster" />
         </span>
         <div className={styles.circleRating}>
-          <span className={styles.rating_text}>{vote_average}</span>
+          <span className={styles.rating_text}>
+            <CircularRating rating={+vote_average} />
+          </span>
         </div>
         <div className={styles.genres}>
           {genre_ids.map((genreId: number) => {

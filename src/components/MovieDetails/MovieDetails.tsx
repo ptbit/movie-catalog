@@ -4,6 +4,7 @@ import { FullMovieType } from "../../types/movie";
 import { runtimeToStr } from "../../utils/helpers";
 import { PlayBtn } from "../PlayBtn/PlayBtn";
 import styles from "./styles.module.css";
+import { CircularRating } from "../CircularRating/CircularRating";
 
 export const MovieDetails: FC<{
   movie: FullMovieType;
@@ -25,14 +26,18 @@ export const MovieDetails: FC<{
           );
         })}
       </div>
-      {videoKey !== "" ? (
-        <span className={styles.movie_details_overview}>
-          <PlayBtn videoKey={videoKey} watchTrailerPlayVideoBtn={true} />
+      <div className={styles.movie_details__row}>
+        <span className={styles.circular_rating}>
+          <CircularRating rating={+movie.vote_average || 0} type='big'/>
         </span>
-      ) : (
-        <h2 className={styles.movie_details_overview}>No Official Video</h2>
-      )}
-
+        {videoKey !== "" ? (
+          <span className={styles.movie_details_overview}>
+            <PlayBtn videoKey={videoKey} watchTrailerPlayVideoBtn={true} />
+          </span>
+        ) : (
+          <h2 className={styles.movie_details_overview}>No Official Video</h2>
+        )}
+      </div>
       <div className={styles.movie_details_overview}>
         <div className={styles.movie_details_overview_title}>Overview</div>
         <div className={styles.movie_details_overview_description}>{movie.overview}</div>
