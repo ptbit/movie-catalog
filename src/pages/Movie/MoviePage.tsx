@@ -38,7 +38,7 @@ export const MoviePage: FC = () => {
   if (movie.poster_path != null) {
     movie_details_poster = "https://image.tmdb.org/t/p/original" + movie.poster_path;
   }
-
+  console.log("TEAM-", team);
   return (
     <div className={styles.movie_details_page}>
       <div className={styles.background_logo}>
@@ -59,21 +59,23 @@ export const MoviePage: FC = () => {
         <MovieDetails movie={movie} videoKey={videos.length > 0 ? videos[0].key : ""} />
       </div>
 
-      <div className={styles.movie_details_castSection}>
-        <h2>Top Cast</h2>
-        <div className={styles.actors_row}>
-          {team.map((el, index) => {
-            return (
-              <ActorItem
-                key={index}
-                avatar={"https://image.tmdb.org/t/p/w138_and_h175_face" + el.profile_path}
-                name={el.name}
-                role={el.character ? el.character : ""}
-              />
-            );
-          })}
+      {team.length > 0 && (
+        <div className={styles.movie_details_castSection}>
+          <h2>Top Cast</h2>
+          <div className={styles.actors_row}>
+            {team.map((el, index) => {
+              return (
+                <ActorItem
+                  key={index}
+                  avatar={"https://image.tmdb.org/t/p/w138_and_h175_face" + el.profile_path}
+                  name={el.name}
+                  role={el.character ? el.character : ""}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {videos.length > 0 && (
         <div className={styles.movie_details_videos__section}>

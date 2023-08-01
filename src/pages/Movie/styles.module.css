@@ -28,7 +28,6 @@ border: 1px solid greenyellow;
   margin-bottom: 50px;
   padding: 0 20px;
   display: flex;
-  justify-content: center;
   gap: 50px;
 }
 .movie_details_poster {
