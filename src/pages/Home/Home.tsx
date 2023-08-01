@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { FC, KeyboardEvent, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { LazyLoadPic } from "../../components/LazyLoadPic/LazyLoadPic";
+import { clearMoviesList } from "../../store/moviesSlice";
 
 const Home: FC = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
@@ -37,6 +38,7 @@ const Home: FC = () => {
 
   const goToSearchPage = () => {
     if (searchInputValue !== "") {
+      appDispatch(clearMoviesList());
       navigate("/search/" + searchInputValue);
     }
   };
