@@ -4,6 +4,7 @@ import { Genres } from "../../services/Genres";
 import { MovieType } from "../../types/movie";
 import NoPoster from "../../assets/no-poster.png";
 import styles from "./styles.module.css";
+import { LazyLoadPic } from "../LazyLoadPic/LazyLoadPic";
 
 export const MovieCard: FC<MovieType> = ({
   poster_path,
@@ -13,15 +14,15 @@ export const MovieCard: FC<MovieType> = ({
   genre_ids = [],
   id,
 }) => {
+  if (poster_path === "https://image.tmdb.org/t/p/w220_and_h330_facenull") {
+    poster_path = NoPoster;
+  }
+
   return (
     <Link to={"/movies/" + id} className={styles.movie_card}>
       <div className={styles.poster_wrapper}>
         <span className={styles.poster_holder}>
-          {poster_path === "https://image.tmdb.org/t/p/w220_and_h330_facenull" ? (
-            <img src={NoPoster} alt="NoPoster"></img>
-          ) : (
-            <img className={styles.poster} src={poster_path} alt={title}></img>
-          )}
+          <LazyLoadPic src={poster_path} alt={title} className="movie_card__poster" />
         </span>
         <div className={styles.circleRating}>
           <span className={styles.rating_text}>{vote_average}</span>

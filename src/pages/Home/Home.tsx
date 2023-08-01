@@ -6,7 +6,7 @@ import { CarouselSection } from "./CarouselSection";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { FC, KeyboardEvent, useEffect, useState } from "react";
 import styles from "./styles.module.css";
-// import { addSearchRequest } from "../../store/searchSlice";
+import { LazyLoadPic } from "../../components/LazyLoadPic/LazyLoadPic";
 
 export const Home: FC = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
@@ -37,7 +37,6 @@ export const Home: FC = () => {
 
   const goToSearchPage = () => {
     if (searchInputValue !== "") {
-      // appDispatch(addSearchRequest(searchInputValue));
       navigate("/search/" + searchInputValue);
     }
   };
@@ -51,9 +50,8 @@ export const Home: FC = () => {
       <div className={styles.hero_banner}>
         <div className={styles.hero_image}>
           <span className={styles.hero_background}>
-            <img
-              className={styles.hero_img}
-              src={"https://image.tmdb.org/t/p/original/" + heroImgUrl}></img>
+            <LazyLoadPic src={"https://image.tmdb.org/t/p/original/" + heroImgUrl} alt={'Hero image background'} className={'hero_img' } />
+            
           </span>
         </div>
 

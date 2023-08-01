@@ -17,7 +17,7 @@ export const ActorItem: FC<ActorItemPropsType> = ({ name, avatar, role }) => {
   return (
     <div className={styles.actor_item}>
       <div className={styles.actor_avatar}>
-        <LazyLoadPic imageSrc={avatar} imageAlt={name}/>
+        <LazyLoadPic src={avatar} alt={name} className={"actor_avatar__img" } />
       </div>
       <div className={styles.actor_name}>{name}</div>
       <div className={styles.actor_role}>{role}</div>

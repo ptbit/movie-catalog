@@ -1,4 +1,4 @@
-import { FC, lazy } from "react";
+import { FC } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
@@ -9,7 +9,9 @@ import { getMovie, getSimilar, getTeam, getVideos } from "../../store/movieSlice
 import { clearMoviesList } from "../../store/moviesSlice";
 import { ActorItem } from "../../components/ActorItem/ActorItem";
 import { VideoItem } from "../../components/VideoItem/VideoItem";
+import NoPoster from "../../assets/no-poster.png";
 import styles from "./styles.module.css";
+import { LazyLoadPic } from "../../components/LazyLoadPic/LazyLoadPic";
 
 export const MoviePage: FC = () => {
   const appDispatch = useAppDispatch();
@@ -32,18 +34,26 @@ export const MoviePage: FC = () => {
     appDispatch(getVideos(movieId));
   }, [params]);
 
+  let movie_details_poster = NoPoster;
+  if (movie.poster_path != null) {
+    movie_details_poster = "https://image.tmdb.org/t/p/original" + movie.poster_path;
+  }
+
   return (
     <div className={styles.movie_details_page}>
       <div className={styles.background_logo}>
-        <img
-          src={"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.background}
-          alt={movie.background}
-        />
+        {movie.background && (
+          <LazyLoadPic
+            src={"https://image.tmdb.org/t/p/w1920_and_h800_multi_faces" + movie.background}
+            alt={movie.title}
+            className="movie_card__background_logo"
+          />
+        )}
       </div>
       <div className={styles.movie_details_castSectionShadow}></div>
       <div className={styles.movie_details_container}>
         <div className={styles.movie_details_poster}>
-          <img src={"https://image.tmdb.org/t/p/original" + movie.poster_path} alt="" />
+          <LazyLoadPic src={movie_details_poster} alt={movie.title} />
           <div className={styles.movie_details_circle_rating}>{movie.vote_average}</div>
         </div>
         <MovieDetails movie={movie} videoKey={videos.length > 0 ? videos[0].key : ""} />

@@ -15,11 +15,12 @@ border: 1px solid greenyellow;
   top: 0;
   left: 0;
 }
-.background_logo img {
-  object-fit: cover;
-  height: 100%;
+
+.background_logo span {
   width: 100%;
+  height: 100%;
 }
+
 .movie_details_container {
   width: 100%;
   max-width: 1200px;

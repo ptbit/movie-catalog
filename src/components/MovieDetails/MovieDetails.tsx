@@ -42,10 +42,14 @@ export const MovieDetails: FC<{
           <span className={styles.movie_details_info_item_title}>Status:</span>
           <span className={styles.movie_details_info_item_content}>{movie.status}</span>
         </div>
-        <div className={styles.movie_details_info_item}>
-          <span className={styles.movie_details_info_item_title}>Release Date:</span>
-          <span className={styles.movie_details_info_item_content}>{movie.release_date}</span>
-        </div>
+
+        {movie.release_date && (
+          <div className={styles.movie_details_info_item}>
+            <span className={styles.movie_details_info_item_title}>Release Date:</span>
+            <span className={styles.movie_details_info_item_content}>{movie.release_date}</span>
+          </div>
+        )}
+
         <div className={styles.movie_details_info_item}>
           <span className={styles.movie_details_info_item_title}>Runtime:</span>
           <span className={styles.movie_details_info_item_content}>
