@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmovie_catalog=self.webpackChunkmovie_catalog||[]).push([[43],{9043:function(e,a,c){c.r(a);var n=c(184);a.default=function(){return(0,n.jsx)("h1",{children:"TV"})}}}]);
+//# sourceMappingURL=43.7b709f23.chunk.js.map
