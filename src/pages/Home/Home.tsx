@@ -8,7 +8,7 @@ import { FC, KeyboardEvent, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { LazyLoadPic } from "../../components/LazyLoadPic/LazyLoadPic";
 
-export const Home: FC = () => {
+const Home: FC = () => {
   const [heroImgUrl, setHeroImgUrl] = useState("");
   const [searchInputValue, setSearchInputValue] = useState("");
   const navigate = useNavigate();
@@ -50,8 +50,11 @@ export const Home: FC = () => {
       <div className={styles.hero_banner}>
         <div className={styles.hero_image}>
           <span className={styles.hero_background}>
-            <LazyLoadPic src={"https://image.tmdb.org/t/p/original/" + heroImgUrl} alt={'Hero image background'} className={'hero_img' } />
-            
+            <LazyLoadPic
+              src={"https://image.tmdb.org/t/p/original/" + heroImgUrl}
+              alt={"Hero image background"}
+              className={"hero_img"}
+            />
           </span>
         </div>
 
@@ -82,3 +85,4 @@ export const Home: FC = () => {
     </main>
   );
 };
+export default Home;

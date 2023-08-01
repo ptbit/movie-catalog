@@ -13,7 +13,7 @@ import NoPoster from "../../assets/no-poster.png";
 import styles from "./styles.module.css";
 import { LazyLoadPic } from "../../components/LazyLoadPic/LazyLoadPic";
 
-export const MoviePage: FC = () => {
+const MoviePage: FC = () => {
   const appDispatch = useAppDispatch();
   const movie = useAppSelector((state) => state.movie.movie);
   const team = useAppSelector((state) => state.movie.team);
@@ -112,3 +112,5 @@ export const MoviePage: FC = () => {
     </div>
   );
 };
+
+export default MoviePage;

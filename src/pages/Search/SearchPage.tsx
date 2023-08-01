@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getSearchMovies } from "../../store/moviesSlice";
 import styles from "./styles.module.css";
 
-export const SearchPage: FC = () => {
+const SearchPage: FC = () => {
   const params = useParams();
   const [moviesPage, setMoviesPage] = useState(1);
   const searchReq = params.search ? params.search : "";
@@ -51,3 +51,5 @@ export const SearchPage: FC = () => {
     </div>
   );
 };
+
+export default SearchPage;

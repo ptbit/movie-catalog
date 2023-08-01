@@ -8,7 +8,7 @@ import { LazyLoadMovies } from "../../components/LazyLoadMovies/LazyLoadMovies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from "./styles.module.css";
 
-export const Movies: FC = () => {
+const Movies: FC = () => {
   const appDispatch = useAppDispatch();
   const selectedGenres = useAppSelector((state) => state.selectedGenres.selectedGenres);
   const movies = useAppSelector((state) => state.movies.movies);
@@ -64,3 +64,5 @@ export const Movies: FC = () => {
     </main>
   );
 };
+
+export default Movies;

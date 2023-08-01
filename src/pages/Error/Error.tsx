@@ -2,7 +2,7 @@ import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./styles.module.css";
 
-export const Error: FC = () => {
+const Error: FC = () => {
   return (
     // <main>
     <main className={styles.page_container}>
@@ -14,3 +14,5 @@ export const Error: FC = () => {
     </main>
   );
 };
+
+export default Error;
